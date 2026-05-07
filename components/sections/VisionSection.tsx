@@ -4,6 +4,7 @@ import RevealUp from "@/components/motion/RevealUp";
 export default function VisionSection({ text }: { text: string }) {
   return (
     <section
+      id="vision"
       style={{
         padding: "9rem 2rem",
         borderTop: "1px solid var(--line-soft)",

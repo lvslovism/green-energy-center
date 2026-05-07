@@ -17,7 +17,12 @@ const config: Config = {
         "accent-glow": "var(--accent-glow)",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        sans: [
+          "var(--font-geist-sans)",
+          "var(--font-noto-tc)",
+          "system-ui",
+          "sans-serif",
+        ],
         mono: ["var(--font-jetbrains)", "monospace"],
       },
     },

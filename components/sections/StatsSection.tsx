@@ -32,6 +32,7 @@ function Counter({ target }: { target: number }) {
 export default function StatsSection({ stats }: { stats: StatItem[] }) {
   return (
     <section
+      id="stats"
       style={{
         padding: "7rem 2rem",
         borderTop: "1px solid var(--line-soft)",

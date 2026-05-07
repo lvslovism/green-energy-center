@@ -5,6 +5,7 @@ import MagneticButton from "@/components/motion/MagneticButton";
 export default function ContactCTA() {
   return (
     <section
+      id="contact"
       style={{
         padding: "5rem 2rem 5rem",
         borderTop: "1px solid var(--line)",

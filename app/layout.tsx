@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Noto_Sans_TC } from "next/font/google";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
+  display: "swap",
+});
+
+const notoSansTC = Noto_Sans_TC({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "900"],
+  variable: "--font-noto-tc",
   display: "swap",
 });
 
@@ -20,7 +27,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-Hant" className={`${GeistSans.variable} ${jetbrainsMono.variable}`}>
+    <html
+      lang="zh-Hant"
+      className={`${GeistSans.variable} ${jetbrainsMono.variable} ${notoSansTC.variable}`}
+    >
       <body className="font-sans">{children}</body>
     </html>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import type { HeroContent } from "@/lib/types";
 import ParticleField from "@/components/visuals/ParticleField";
@@ -8,19 +8,28 @@ import BatteryCell3D from "@/components/visuals/BatteryCell3D";
 import MagneticButton from "@/components/motion/MagneticButton";
 import SplitText from "@/components/motion/SplitText";
 
+type HeroVariant = "A" | "B" | "C";
+
 type HeroProps = {
   content: HeroContent;
-  /** A = ParticleField（首頁預設）/ B = MeshGrid / C = BatteryCell3D */
-  variant?: "A" | "B" | "C";
+  /** 起始 variant；使用者可透過 switcher 切換。預設 A。 */
+  variant?: HeroVariant;
 };
 
-export default function Hero({ content, variant = "A" }: HeroProps) {
+const VARIANT_BUTTONS: { id: HeroVariant; label: string }[] = [
+  { id: "A", label: "Particle Field" },
+  { id: "B", label: "Mesh Grid" },
+  { id: "C", label: "3D Cell" },
+];
+
+export default function Hero({ content, variant: initialVariant = "A" }: HeroProps) {
   const ctaRef = useRef<HTMLDivElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
   const eyebrowRef = useRef<HTMLDivElement>(null);
+  const [activeVariant, setActiveVariant] = useState<HeroVariant>(initialVariant);
 
   useEffect(() => {
-    // CTA + meta + eyebrow 進場：與 mockup 一致 delay 1.3s
+    // Eyebrow + CTA + meta 進場：與 mockup 一致
     if (eyebrowRef.current) {
       gsap.fromTo(
         eyebrowRef.current,
@@ -54,11 +63,34 @@ export default function Hero({ content, variant = "A" }: HeroProps) {
         <div className="cb-br" />
       </div>
 
-      {/* Hero visual layer */}
+      {/* Hero visual layers — 三個都 mount，opacity 切換達成 fade */}
       <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-        {variant === "A" && <ParticleField />}
-        {variant === "B" && <MeshGrid />}
-        {variant === "C" && <BatteryCell3D />}
+        <div className={`hero-vis ${activeVariant === "A" ? "active" : ""}`}>
+          <ParticleField />
+        </div>
+        <div className={`hero-vis ${activeVariant === "B" ? "active" : ""}`}>
+          <MeshGrid />
+        </div>
+        <div className={`hero-vis ${activeVariant === "C" ? "active" : ""}`}>
+          <BatteryCell3D />
+        </div>
+      </div>
+
+      {/* Variant switcher */}
+      <div className="variant-switcher" role="group" aria-label="Hero visual mode">
+        <div className="vs-label">HERO_VISUAL.MODE</div>
+        {VARIANT_BUTTONS.map((b) => (
+          <button
+            key={b.id}
+            type="button"
+            className={`vs-btn ${activeVariant === b.id ? "active" : ""}`}
+            data-cursor-hover
+            onClick={() => setActiveVariant(b.id)}
+            aria-pressed={activeVariant === b.id}
+          >
+            <span className="vs-id">{b.id}</span> {b.label}
+          </button>
+        ))}
       </div>
 
       <div
@@ -223,6 +255,92 @@ export default function Hero({ content, variant = "A" }: HeroProps) {
       </div>
 
       <style>{`
+        .hero-vis {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          transition: opacity 0.6s ease;
+          pointer-events: none;
+        }
+        .hero-vis.active {
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        .variant-switcher {
+          position: absolute;
+          top: 50%;
+          right: 2rem;
+          transform: translateY(-50%);
+          z-index: 5;
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          background: rgba(10, 14, 20, 0.7);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid var(--line);
+          padding: 1rem;
+          border-radius: 4px;
+        }
+        .vs-label {
+          font-family: var(--font-jetbrains), monospace;
+          font-size: 9px;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin-bottom: 0.25rem;
+        }
+        .vs-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+          padding: 0.5rem 0.75rem;
+          background: transparent;
+          border: 1px solid var(--line-soft);
+          color: var(--text);
+          font-family: var(--font-jetbrains), monospace;
+          font-size: 10px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          cursor: inherit;
+          transition: all 0.25s;
+          min-width: 140px;
+        }
+        .vs-btn:hover {
+          border-color: var(--accent);
+          background: var(--accent-soft);
+        }
+        .vs-btn.active {
+          background: var(--accent);
+          color: var(--bg);
+          border-color: var(--accent);
+        }
+        .vs-btn .vs-id {
+          opacity: 0.6;
+          font-size: 9px;
+        }
+        @media (max-width: 768px) {
+          .variant-switcher {
+            position: absolute;
+            top: auto;
+            right: 1rem;
+            bottom: 5rem;
+            transform: none;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.75rem;
+          }
+          .vs-label {
+            display: none;
+          }
+          .vs-btn {
+            min-width: 0;
+            padding: 0.45rem 0.6rem;
+          }
+        }
+
         .corner-brackets {
           position: absolute;
           inset: 1.5rem;

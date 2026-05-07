@@ -8,6 +8,7 @@ import type { Product } from "@/lib/types";
 export default function ProductMatrix({ products }: { products: Product[] }) {
   return (
     <section
+      id="products"
       style={{
         padding: "7rem 2rem",
         position: "relative",
