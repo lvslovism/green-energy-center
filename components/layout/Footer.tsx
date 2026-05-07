@@ -1,4 +1,11 @@
-export default function Footer() {
+type FooterProps = {
+  copyright: string;
+  address: string;
+  email: string;
+  locales: string;
+};
+
+export default function Footer({ copyright, address, email, locales }: FooterProps) {
   return (
     <footer
       style={{
@@ -25,10 +32,10 @@ export default function Footer() {
           borderTop: "1px solid var(--line-soft)",
         }}
       >
-        <div>© 2026 GREEN ENERGY TECH</div>
-        <div>TAIPEI · 台灣</div>
-        <div>info@greentech.tw</div>
-        <div>EN / 繁中 / 简中 / JP</div>
+        <div>{copyright}</div>
+        <div>{address}</div>
+        <div>{email}</div>
+        <div>{locales}</div>
       </div>
     </footer>
   );

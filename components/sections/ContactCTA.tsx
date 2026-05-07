@@ -2,7 +2,14 @@
 import RevealUp from "@/components/motion/RevealUp";
 import MagneticButton from "@/components/motion/MagneticButton";
 
-export default function ContactCTA() {
+type ContactCTAProps = {
+  label: string;
+  title: string;
+  buttonLabel: string;
+  buttonHref: string;
+};
+
+export default function ContactCTA({ label, title, buttonLabel, buttonHref }: ContactCTAProps) {
   return (
     <section
       id="contact"
@@ -28,7 +35,7 @@ export default function ContactCTA() {
         <div>
           <RevealUp>
             <div className="section-index" style={{ marginBottom: "2rem" }}>
-              04 / CONTACT
+              {label}
             </div>
           </RevealUp>
           <RevealUp>
@@ -40,13 +47,13 @@ export default function ContactCTA() {
                 lineHeight: 0.95,
                 margin: 0,
               }}
-              dangerouslySetInnerHTML={{ __html: "一起重新定義<br/><em>能量。</em>" }}
+              dangerouslySetInnerHTML={{ __html: title }}
             />
           </RevealUp>
         </div>
         <div className="contact-cta-btn-wrap">
-          <MagneticButton href="#contact" className="btn-primary">
-            聯絡我們
+          <MagneticButton href={buttonHref} className="btn-primary">
+            {buttonLabel}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 8h8m0 0L8 5m3 3L8 11" stroke="currentColor" strokeWidth="1.4" />
             </svg>

@@ -5,7 +5,13 @@ import ProductCardIsometric from "@/components/visuals/ProductCardIsometric";
 import ProductCardDataSheet from "@/components/visuals/ProductCardDataSheet";
 import type { Product } from "@/lib/types";
 
-export default function ProductMatrix({ products }: { products: Product[] }) {
+type ProductMatrixProps = {
+  products: Product[];
+  label: string;
+  title: string;
+};
+
+export default function ProductMatrix({ products, label, title }: ProductMatrixProps) {
   return (
     <section
       id="products"
@@ -17,10 +23,7 @@ export default function ProductMatrix({ products }: { products: Product[] }) {
       }}
     >
       <div style={{ maxWidth: 1500, margin: "0 auto" }}>
-        <SectionHeader
-          index="01 / PRODUCT_MATRIX"
-          title='三條產品線，<em>一個能量未來。</em>'
-        />
+        <SectionHeader index={label} title={title} />
 
         <div
           style={{

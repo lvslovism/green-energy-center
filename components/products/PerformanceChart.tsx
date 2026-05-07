@@ -59,7 +59,21 @@ interface CustomTooltipProps {
   label?: string;
 }
 
-function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
+type Labels = {
+  ours: string;
+  market: string;
+  lowerBetter: string;
+  notePrefix: string;
+  noteEm: string;
+  noteSuffix: string;
+};
+
+function CustomTooltip({
+  active,
+  payload,
+  label,
+  labels,
+}: CustomTooltipProps & { labels: Labels }) {
   if (!active || !payload || payload.length === 0) return null;
   const row = payload[0].payload;
   return (
@@ -77,21 +91,27 @@ function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
         {label}
       </div>
       <div style={{ color: ACCENT, marginBottom: "0.25rem" }}>
-        ● Ours · <strong>{row.oursLabel}</strong>
+        ● {labels.ours} · <strong>{row.oursLabel}</strong>
       </div>
       <div style={{ color: AXIS }}>
-        ● Market · {row.marketLabel}
+        ● {labels.market} · {row.marketLabel}
       </div>
       {row.inverted && (
         <div style={{ marginTop: "0.5rem", fontSize: 9, color: AXIS, letterSpacing: "0.15em" }}>
-          (LOWER = BETTER)
+          {labels.lowerBetter}
         </div>
       )}
     </div>
   );
 }
 
-export default function PerformanceChart({ data }: { data: PerformanceMetric[] }) {
+export default function PerformanceChart({
+  data,
+  labels,
+}: {
+  data: PerformanceMetric[];
+  labels: Labels;
+}) {
   const rows: ChartRow[] = data.map(computeNormalizedRow);
 
   return (
@@ -111,7 +131,7 @@ export default function PerformanceChart({ data }: { data: PerformanceMetric[] }
             stroke={AXIS}
             tick={{ fill: AXIS, fontFamily: "var(--font-jetbrains), monospace", fontSize: 11 }}
           />
-          <Tooltip cursor={{ fill: "rgba(94,234,212,0.04)" }} content={<CustomTooltip />} />
+          <Tooltip cursor={{ fill: "rgba(94,234,212,0.04)" }} content={<CustomTooltip labels={labels} />} />
           <Legend
             wrapperStyle={{
               fontFamily: "var(--font-jetbrains), monospace",
@@ -122,12 +142,12 @@ export default function PerformanceChart({ data }: { data: PerformanceMetric[] }
             }}
             iconType="square"
           />
-          <Bar dataKey="ours" name="Ours" fill={ACCENT} radius={[0, 0, 0, 0]} barSize={14}>
+          <Bar dataKey="ours" name={labels.ours} fill={ACCENT} radius={[0, 0, 0, 0]} barSize={14}>
             {rows.map((_, i) => (
               <Cell key={i} fill={ACCENT} />
             ))}
           </Bar>
-          <Bar dataKey="market" name="Market avg" fill={MARKET} radius={[0, 0, 0, 0]} barSize={14}>
+          <Bar dataKey="market" name={labels.market} fill={MARKET} radius={[0, 0, 0, 0]} barSize={14}>
             {rows.map((_, i) => (
               <Cell key={i} fill={MARKET} />
             ))}
@@ -135,8 +155,9 @@ export default function PerformanceChart({ data }: { data: PerformanceMetric[] }
         </BarChart>
       </ResponsiveContainer>
       <p className="perf-note">
-        資料來源：自家實驗 vs. 公開資料平均（2025）。標示
-        <em> lower = better</em> 的指標已在圖表上反向呈現以利視覺對比，tooltip 顯示原始值。
+        {labels.notePrefix}
+        <em>{labels.noteEm}</em>
+        {labels.noteSuffix}
       </p>
     </div>
   );

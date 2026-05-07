@@ -1,12 +1,11 @@
 "use client";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import type { Product } from "@/lib/products";
 import SpecGrid from "./SpecGrid";
 import UseCaseGrid from "./UseCaseGrid";
 import DocumentList from "./DocumentList";
+import type { LocalizedProduct } from "@/lib/i18n/adapters";
 
-// recharts 在 SSR 時會嘗試讀 ResizeObserver / window，static export 改 client-only 載入
 const PerformanceChart = dynamic(() => import("./PerformanceChart"), {
   ssr: false,
   loading: () => (
@@ -30,25 +29,53 @@ const PerformanceChart = dynamic(() => import("./PerformanceChart"), {
 
 type TabId = "specs" | "performance" | "applications" | "documents";
 
-const TABS: { id: TabId; label: string; index: string }[] = [
-  { id: "specs", label: "規格", index: "01" },
-  { id: "performance", label: "效能對比", index: "02" },
-  { id: "applications", label: "應用場景", index: "03" },
-  { id: "documents", label: "文件下載", index: "04" },
-];
+export type ProductTabsStrings = {
+  tabs: {
+    specs: string;
+    performance: string;
+    applications: string;
+    documents: string;
+  };
+  panels: {
+    specs_idx: string;
+    specs_title: string;
+    performance_idx: string;
+    performance_title: string;
+    performance_sub: string;
+    applications_idx: string;
+    applications_title: string;
+    documents_idx: string;
+    documents_title: string;
+    documents_sub: string;
+  };
+  download: string;
+  ours_label: string;
+  market_label: string;
+  lower_better: string;
+  perf_note_prefix: string;
+  perf_note_em: string;
+  perf_note_suffix: string;
+};
 
-export default function ProductTabs({ product }: { product: Product }) {
+type ProductTabsProps = {
+  product: LocalizedProduct;
+  strings: ProductTabsStrings;
+};
+
+export default function ProductTabs({ product, strings }: ProductTabsProps) {
   const [active, setActive] = useState<TabId>("specs");
+
+  const TABS: { id: TabId; label: string; index: string }[] = [
+    { id: "specs", label: strings.tabs.specs, index: "01" },
+    { id: "performance", label: strings.tabs.performance, index: "02" },
+    { id: "applications", label: strings.tabs.applications, index: "03" },
+    { id: "documents", label: strings.tabs.documents, index: "04" },
+  ];
 
   return (
     <section className="product-tabs">
-      {/* Tab bar — sticky 在 nav 下方 */}
       <div className="pt-bar-wrap">
-        <div
-          className="pt-bar"
-          role="tablist"
-          aria-label="Product information tabs"
-        >
+        <div className="pt-bar" role="tablist" aria-label="Product information tabs">
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -70,53 +97,55 @@ export default function ProductTabs({ product }: { product: Product }) {
       </div>
 
       <div className="pt-content">
-        {/* Specs */}
         {active === "specs" && (
           <div role="tabpanel" id="panel-specs" aria-labelledby="tab-specs" className="pt-panel">
             <header className="pt-panel-header">
-              <span className="pt-panel-idx">01 / SPECIFICATION</span>
-              <h2 className="pt-panel-title">完整規格表</h2>
+              <span className="pt-panel-idx">{strings.panels.specs_idx}</span>
+              <h2 className="pt-panel-title">{strings.panels.specs_title}</h2>
             </header>
             <SpecGrid specs={product.specs} />
           </div>
         )}
 
-        {/* Performance */}
         {active === "performance" && (
           <div role="tabpanel" id="panel-performance" aria-labelledby="tab-performance" className="pt-panel">
             <header className="pt-panel-header">
-              <span className="pt-panel-idx">02 / BENCHMARK</span>
-              <h2 className="pt-panel-title">效能對比</h2>
-              <p className="pt-panel-sub">
-                自家產品（accent 色）vs. 市場平均值（dim）四項關鍵指標。
-              </p>
+              <span className="pt-panel-idx">{strings.panels.performance_idx}</span>
+              <h2 className="pt-panel-title">{strings.panels.performance_title}</h2>
+              <p className="pt-panel-sub">{strings.panels.performance_sub}</p>
             </header>
-            <PerformanceChart data={product.performance} />
+            <PerformanceChart
+              data={product.performance}
+              labels={{
+                ours: strings.ours_label,
+                market: strings.market_label,
+                lowerBetter: strings.lower_better,
+                notePrefix: strings.perf_note_prefix,
+                noteEm: strings.perf_note_em,
+                noteSuffix: strings.perf_note_suffix,
+              }}
+            />
           </div>
         )}
 
-        {/* Applications */}
         {active === "applications" && (
           <div role="tabpanel" id="panel-applications" aria-labelledby="tab-applications" className="pt-panel">
             <header className="pt-panel-header">
-              <span className="pt-panel-idx">03 / APPLICATIONS</span>
-              <h2 className="pt-panel-title">應用場景</h2>
+              <span className="pt-panel-idx">{strings.panels.applications_idx}</span>
+              <h2 className="pt-panel-title">{strings.panels.applications_title}</h2>
             </header>
             <UseCaseGrid useCases={product.useCases} />
           </div>
         )}
 
-        {/* Documents */}
         {active === "documents" && (
           <div role="tabpanel" id="panel-documents" aria-labelledby="tab-documents" className="pt-panel">
             <header className="pt-panel-header">
-              <span className="pt-panel-idx">04 / DOCUMENTS</span>
-              <h2 className="pt-panel-title">技術文件</h2>
-              <p className="pt-panel-sub">
-                正式文件正建構中，目前以 hardcoded 範例呈現，Step 6 接 CMS 後即可下載。
-              </p>
+              <span className="pt-panel-idx">{strings.panels.documents_idx}</span>
+              <h2 className="pt-panel-title">{strings.panels.documents_title}</h2>
+              <p className="pt-panel-sub">{strings.panels.documents_sub}</p>
             </header>
-            <DocumentList documents={product.documents} />
+            <DocumentList documents={product.documents} downloadLabel={strings.download} />
           </div>
         )}
       </div>

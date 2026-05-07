@@ -1,0 +1,289 @@
+{
+  "common": {
+    "nav": {
+      "products": "Products",
+      "technology": "Technology",
+      "about": "About",
+      "contact": "Contact",
+      "brand": "Green Energy"
+    },
+    "footer": {
+      "tagline": "Redefining energy, together.",
+      "copyright": "© 2025 Green Energy Technology Co., Ltd.",
+      "address": "15F, No. 100, Songren Rd, Xinyi Dist, Taipei",
+      "locales": "EN / 繁中 / 简中 / JP"
+    },
+    "cta": {
+      "contact_us": "Contact us →",
+      "view_specs": "VIEW SPECS →",
+      "inquiry_title": "Need a datasheet or quote?",
+      "inquiry_desc": "Our energy solutions team will respond within 24 hours."
+    }
+  },
+  "home": {
+    "meta_title": "Green Energy — Store every possible form of energy",
+    "meta_description": "Sodium-ion cells, high-energy lithium-ion, supercapacitors. Full-stack energy storage from materials to systems.",
+    "hero": {
+      "live_badge": "LIVE",
+      "eyebrow_segments": ["NEXT-GEN ENERGY STORAGE", "EST. 2024", "TPE"],
+      "title_line_1": "Store every",
+      "title_line_2": "possible form of <em>energy</em>.",
+      "subtitle": "From sodium-ion to supercapacitors — we redefine energy density, lifespan and the safety envelope of batteries through materials engineering.",
+      "cta_primary_label": "Explore tech",
+      "cta_primary_url": "/technology/",
+      "cta_secondary_label": "Watch intro",
+      "cta_secondary_url": "#intro",
+      "scroll": "SCROLL",
+      "meta_items": [
+        { "label": "PRODUCT_LINES", "value": "03" },
+        { "label": "PATENTS", "value": "14" },
+        { "label": "PARTNERS", "value": "27" }
+      ]
+    },
+    "products": {
+      "label": "01 / PRODUCT_MATRIX",
+      "title": "Three product lines. <em>One energy future.</em>"
+    },
+    "stats": {
+      "label": "02 / VALIDATED",
+      "title": "Data-driven, <em>not marketing-driven.</em>",
+      "items": [
+        { "value": 340, "suffix": null, "label": "Wh / kg", "desc": "Measured energy density of the high-nickel system, 28% above market average." },
+        { "value": 6000, "suffix": "+", "label": "CYCLES", "desc": "Sodium-ion cycle life under 80% capacity retention." },
+        { "value": 98, "suffix": "%", "label": "EFFICIENCY", "desc": "Round-trip efficiency of the supercap hybrid system." }
+      ]
+    },
+    "vision": {
+      "label": "03 / VISION",
+      "text": "At the <em>turn of the century</em> — when fossil fuels phase out and renewables take over — energy storage becomes the <em>critical node</em> keeping civilization running. We innovate across materials, process and systems so that <em>every watt-hour</em> can be stored with care."
+    },
+    "contact_cta": {
+      "label": "04 / CONTACT",
+      "title": "Let's redefine<br/><em>energy.</em>",
+      "button": "Contact us"
+    }
+  },
+  "products": {
+    "shared": {
+      "breadcrumb_home": "HOME",
+      "breadcrumb_products": "PRODUCTS",
+      "tabs": {
+        "specs": "Specs",
+        "performance": "Performance",
+        "applications": "Use cases",
+        "documents": "Documents"
+      },
+      "panels": {
+        "specs_idx": "01 / SPECIFICATION",
+        "specs_title": "Specifications",
+        "performance_idx": "02 / BENCHMARK",
+        "performance_title": "Performance comparison",
+        "performance_sub": "Our products (accent) vs. market average (dim) on four key metrics.",
+        "applications_idx": "03 / APPLICATIONS",
+        "applications_title": "Use cases",
+        "documents_idx": "04 / DOCUMENTS",
+        "documents_title": "Technical documents",
+        "documents_sub": "Real files are coming. Hardcoded placeholders for now; downloads will be wired up via CMS in Step 6."
+      },
+      "download": "DOWNLOAD",
+      "ours_label": "OURS",
+      "market_label": "Market avg",
+      "lower_better": "(LOWER = BETTER)",
+      "perf_note_prefix": "Sources: in-house data vs. publicly available averages (2025). Metrics flagged ",
+      "perf_note_em": "lower = better",
+      "perf_note_suffix": " are inverted in the chart for visual consistency; tooltips show the original values.",
+      "cta_eyebrow": "— REQUEST SAMPLES",
+      "cta_title_pre": "Ready to integrate <br/>",
+      "cta_title_post": " into your product?",
+      "cta_desc": "Send us your application scenario and annual volume — our engineers will reply with a full proposal within 3 business days.",
+      "cta_button": "Contact sales",
+      "cross_label": "— OTHER PRODUCT LINES"
+    },
+    "items": {
+      "sodium-ion": {
+        "name": "Sodium-ion cell",
+        "name_en": "Sodium-ion cell",
+        "tagline": "Abundant raw materials, low-temperature stability, and over 6,000 charge cycles. A scalable alternative to lithium for grid storage and commercial fleets.",
+        "card_meta": "SODIUM-ION CELL",
+        "card_desc": "Abundant raw materials, low-temperature stability, 6,000+ cycle life. A scalable alternative to lithium for grid storage and commercial fleets.",
+        "use_cases": [
+          { "icon": "Zap", "title": "Grid-scale storage", "description": "Pair with renewables to deliver second-level frequency regulation and hour-level energy balancing." },
+          { "icon": "Truck", "title": "Commercial fleets", "description": "Stable cold-start and long cycle life — best fit for urban delivery and fixed-route fleets." },
+          { "icon": "Sun", "title": "Off-grid solar", "description": "Charge by day, discharge by night — strong capacity retention under high-frequency cycling." },
+          { "icon": "Radio", "title": "Telecom towers", "description": "Backup power that endures temperature extremes — no air-conditioned shelter required." }
+        ],
+        "documents": [
+          { "name": "Product datasheet" },
+          { "name": "UN38.3 test report" },
+          { "name": "MSDS / SDS" },
+          { "name": "3D CAD model" }
+        ]
+      },
+      "lithium-ion": {
+        "name": "High-energy lithium-ion",
+        "name_en": "Lithium-ion high-nickel",
+        "tagline": "340 Wh/kg high-nickel system with proprietary composite electrolyte — a dual breakthrough in energy density and safety. Built for EVs, aerospace, and consumer electronics.",
+        "card_meta": "LITHIUM-ION HIGH-NICKEL",
+        "card_desc": "340 Wh/kg high-nickel system — a breakthrough in energy density and safety. Built for EVs, aerospace, and consumer electronics.",
+        "use_cases": [
+          { "icon": "Car", "title": "EV powertrains", "description": "High energy density + 4C fast charge — 500 km+ range with 15-minute charging." },
+          { "icon": "Plane", "title": "Aerospace power", "description": "Lightweight pouch form-factor compliant with DO-311A aerospace power standards." },
+          { "icon": "Smartphone", "title": "Consumer electronics", "description": "Slim form factor for laptops, drones and AR/VR devices." },
+          { "icon": "HeartPulse", "title": "Medical devices", "description": "Stable voltage platform for portable diagnostic instruments and powered surgical tools." }
+        ],
+        "documents": [
+          { "name": "Product datasheet" },
+          { "name": "IEC 62660 test report" },
+          { "name": "MSDS / SDS" },
+          { "name": "3D CAD model" }
+        ]
+      },
+      "supercapacitor": {
+        "name": "Supercapacitor",
+        "name_en": "Supercapacitor",
+        "tagline": "Sub-second charge/discharge, one million+ cycles. Paired with batteries in hybrid storage systems for peak power and regenerative braking.",
+        "card_meta": "SUPERCAPACITOR",
+        "card_desc": "Sub-second charge/discharge, 1M+ cycles — peak power and energy recovery for hybrid systems.",
+        "use_cases": [
+          { "icon": "RefreshCw", "title": "Regenerative braking", "description": "Capture kinetic energy and feed it back to electrical with 95%+ efficiency and millisecond response." },
+          { "icon": "Activity", "title": "Grid frequency regulation", "description": "Million-cycle, maintenance-free response to high-frequency fluctuations from renewables." },
+          { "icon": "ShieldCheck", "title": "UPS backup", "description": "Millisecond switchover with no maintenance schedule — replaces traditional lead-acid backup." },
+          { "icon": "Anchor", "title": "Port cranes", "description": "Recover energy from gantry crane lowering and shave power peaks; reduces diesel generator load." }
+        ],
+        "documents": [
+          { "name": "Product datasheet" },
+          { "name": "AEC-Q200 test report" },
+          { "name": "MSDS / SDS" },
+          { "name": "Application note" }
+        ]
+      }
+    }
+  },
+  "technology": {
+    "meta_title": "Technology | Green Energy",
+    "meta_description": "From materials science to systems integration — our three-layer self-developed technology architecture.",
+    "header_eyebrow": "— TECHNOLOGY",
+    "header_title": "Technology",
+    "header_sub": "From molecular material design to system-level energy management — every layer is self-developed.",
+    "pillars": {
+      "label": "01 / CORE TECHNOLOGY",
+      "title": "Three-layer technology architecture",
+      "items": [
+        { "icon": "Atom", "title": "Materials science", "desc": "Proprietary cathode materials and electrolyte formulations. Sodium-ion uses a layered oxide cathode; high-nickel Li-ion pairs with a composite solid electrolyte." },
+        { "icon": "Cog", "title": "Process engineering", "desc": "Dry electrode coating with 98.5% yield. Single-line daily capacity of 2 GWh, with 70% less water consumption than conventional processes." },
+        { "icon": "Cpu", "title": "Systems integration", "desc": "Proprietary BMS chip + cloud energy-management platform. Supports Na-ion / Li-ion / supercap hybrid architectures with AI predictive maintenance." }
+      ]
+    },
+    "rd": {
+      "label": "02 / R&D",
+      "title": "R&D capabilities",
+      "stats": [
+        { "value": "127", "label": "Patents" },
+        { "value": "89", "label": "R&D Engineers" },
+        { "value": "18%", "label": "Revenue to R&D" },
+        { "value": "3", "label": "Research Labs" }
+      ],
+      "certs_label": "— CERTIFICATIONS",
+      "certs": ["ISO 9001", "ISO 14001", "IATF 16949", "UL 1973", "IEC 62619", "UN38.3"]
+    },
+    "roadmap": {
+      "label": "03 / ROADMAP",
+      "title": "Technology roadmap",
+      "items": [
+        { "year": "2024 Q4", "content": "Sodium-ion mass production line commissioned (Phase 1: 2 GWh)" },
+        { "year": "2025 Q2", "content": "High-nickel Li-ion 340 Wh/kg pilot line validation completed" },
+        { "year": "2025 Q4", "content": "Supercapacitor module passes automotive AEC-Q200 certification" },
+        { "year": "2026 Q2", "content": "Hybrid storage system (Na-ion + supercap) — first MW-scale site delivered" }
+      ]
+    }
+  },
+  "about": {
+    "meta_title": "About us | Green Energy",
+    "meta_description": "The story, mission, and core team behind Green Energy Technology.",
+    "header_eyebrow": "— ABOUT",
+    "header_title": "About us",
+    "header_sub": "From a Taipei lab in 2021 to a full-stack energy storage company — we focus on what comes after lithium.",
+    "story": {
+      "label": "01 / OUR STORY",
+      "title": "Redefining what energy storage can be",
+      "p1": "Green Energy Technology was founded in 2021 by a team of researchers in electrochemistry, materials science, and energy systems. We believe the next generation of energy storage shouldn't just improve lithium batteries — it should start from fundamentally new materials.",
+      "p2_before": "From the first sodium-ion prototype cell in our Taipei lab to three product lines and two production facilities, we've stayed focused on one thing:",
+      "p2_accent": "storing every watt-hour with care."
+    },
+    "mission": {
+      "label": "02 / MISSION",
+      "title": "Mission & vision",
+      "mission_label": "— MISSION",
+      "mission_text": "Drive down energy storage costs through materials innovation, accelerating the global energy transition.",
+      "vision_label": "— VISION",
+      "vision_text": "Become the #1 sodium-ion energy storage technology provider in Asia-Pacific by 2030."
+    },
+    "team": {
+      "label": "03 / TEAM",
+      "title": "Core team",
+      "members": [
+        { "initials": "CL", "name": "Chen Li", "role": "CEO / Co-founder" },
+        { "initials": "WH", "name": "Wang Hao", "role": "CTO" },
+        { "initials": "LY", "name": "Lin Yu", "role": "VP Materials" },
+        { "initials": "ZW", "name": "Zhang Wei", "role": "VP Engineering" }
+      ],
+      "note": "Team member photos and full bios will be updated before launch."
+    },
+    "milestones": {
+      "label": "04 / MILESTONES",
+      "title": "Milestones",
+      "items": [
+        { "year": "2021", "content": "Taipei lab established; first sodium-ion prototype cell completed" },
+        { "year": "2022", "content": "Pre-Series A funding closed; pilot production line construction began" },
+        { "year": "2023", "content": "Supercapacitor line enters mass production; first customer deliveries" },
+        { "year": "2024", "content": "Na-ion production line commissioned (2 GWh); ISO 9001/14001 certified" },
+        { "year": "2025", "content": "High-nickel Li-ion enters pilot phase; team grows to 200+" }
+      ]
+    }
+  },
+  "contact": {
+    "meta_title": "Contact us | Green Energy",
+    "meta_description": "Contact our team for energy storage solutions.",
+    "header_eyebrow": "— CONTACT",
+    "header_title": "Contact us",
+    "header_sub": "Product inquiries, partnerships, or technical support — our team will respond within 24 hours.",
+    "section_label": "01 / GET IN TOUCH",
+    "section_title": "Send us a message",
+    "form": {
+      "name_label": "Name",
+      "name_placeholder": "Your name",
+      "email_label": "Email",
+      "email_placeholder": "email@company.com",
+      "company_label": "Company",
+      "company_placeholder": "Company name",
+      "product_label": "Product interest",
+      "product_default": "Select a product line",
+      "product_options": [
+        { "value": "sodium-ion", "label": "Sodium-ion cell" },
+        { "value": "lithium-ion", "label": "High-energy lithium-ion" },
+        { "value": "supercapacitor", "label": "Supercapacitor" },
+        { "value": "hybrid", "label": "Hybrid storage system" },
+        { "value": "other", "label": "Other" }
+      ],
+      "message_label": "Message",
+      "message_placeholder": "Tell us about your project or requirements...",
+      "submit": "Submit inquiry",
+      "submitting": "Submitting…",
+      "error": "Submission failed",
+      "success_title": "Thank you for your inquiry",
+      "success_text": "We will get back to you within 24 hours.",
+      "success_reset": "Send another"
+    },
+    "info": {
+      "office_label": "OFFICE",
+      "office_value": "15F, No. 100, Songren Rd, Xinyi Dist, Taipei",
+      "email_label": "EMAIL",
+      "email_value": "info@greentech.tw",
+      "phone_label": "PHONE",
+      "phone_value": "+886 2 2720-XXXX",
+      "hours_label": "HOURS",
+      "hours_value": "Mon - Fri, 09:00 - 18:00 (GMT+8)",
+      "map_placeholder": "MAP PLACEHOLDER"
+    }
+  }
+}

@@ -9,7 +9,13 @@ function pickIcon(name: string, type: string): LucideIcon {
   return FileText;
 }
 
-export default function DocumentList({ documents }: { documents: ProductDocument[] }) {
+export default function DocumentList({
+  documents,
+  downloadLabel,
+}: {
+  documents: ProductDocument[];
+  downloadLabel: string;
+}) {
   return (
     <ul className="doc-list" role="list">
       {documents.map((d) => {
@@ -37,10 +43,10 @@ export default function DocumentList({ documents }: { documents: ProductDocument
               href="#"
               className="doc-download"
               data-cursor-hover
-              aria-label={`下載 ${d.name}`}
+              aria-label={`${downloadLabel} ${d.name}`}
             >
               <Download size={14} strokeWidth={1.6} />
-              <span>DOWNLOAD</span>
+              <span>{downloadLabel}</span>
             </a>
           </li>
         );

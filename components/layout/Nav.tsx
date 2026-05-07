@@ -2,24 +2,52 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import type { Route } from "next";
+import { isLocale, DEFAULT_LOCALE, LOCALE_TOGGLE_LABEL, type Locale } from "@/lib/i18n/locales";
 
-type NavLink = {
-  label: string;
-  href: string;
-  /** 若 truthy，當前頁是首頁時點擊改為 smooth scroll 到指定 id */
-  scrollTargetOnHome?: string;
+type NavStrings = {
+  brand: string;
+  products: string;
+  technology: string;
+  about: string;
+  contact: string;
 };
 
-const NAV_LINKS: NavLink[] = [
-  { label: "產品", href: "/#products", scrollTargetOnHome: "products" },
-  { label: "技術", href: "/technology" },
-  { label: "關於", href: "/about" },
-  { label: "聯絡", href: "/contact" },
-];
+type NavProps = {
+  locale: Locale;
+  strings: NavStrings;
+};
 
-export default function Nav() {
+/** 把 pathname 改寫到目標 locale。例：/zh/about/ → /en/about/ */
+function rewriteLocale(pathname: string | null, target: Locale): string {
+  if (!pathname) return `/${target}/`;
+  const parts = pathname.split("/").filter(Boolean);
+  if (parts.length === 0) return `/${target}/`;
+  if (isLocale(parts[0])) {
+    parts[0] = target;
+  } else {
+    parts.unshift(target);
+  }
+  return `/${parts.join("/")}/`;
+}
+
+export default function Nav({ locale, strings }: NavProps) {
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const isHome =
+    pathname === `/${locale}` || pathname === `/${locale}/` || pathname === "/";
+
+  const NAV_LINKS: { label: string; href: string; scrollTargetOnHome?: string }[] = [
+    {
+      label: strings.products,
+      href: `/${locale}/#products`,
+      scrollTargetOnHome: "products",
+    },
+    { label: strings.technology, href: `/${locale}/technology/` },
+    { label: strings.about, href: `/${locale}/about/` },
+    { label: strings.contact, href: `/${locale}/contact/` },
+  ];
+
+  const targetLocale: Locale = locale === "zh" ? "en" : "zh";
+  const switcherHref = rewriteLocale(pathname, targetLocale);
 
   const handleHomeAnchor = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     if (!isHome) return;
@@ -36,16 +64,17 @@ export default function Nav() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleDisabledClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-  };
-
   return (
     <nav className="top-nav">
-      <Link href={"/" as Route} className="brand-mark" data-cursor-hover onClick={handleBrand}>
+      <Link
+        href={`/${locale}/` as Route}
+        className="brand-mark"
+        data-cursor-hover
+        onClick={handleBrand}
+      >
         <span className="brand-square" />
         <span style={{ fontSize: "1.125rem", fontWeight: 500, letterSpacing: "-0.025em" }}>
-          綠能科技
+          {strings.brand}
         </span>
       </Link>
       <div
@@ -60,7 +89,8 @@ export default function Nav() {
         {NAV_LINKS.map((link) => {
           const isActive =
             !link.scrollTargetOnHome &&
-            (pathname === link.href || pathname?.startsWith(link.href + "/"));
+            (pathname === link.href ||
+              pathname?.startsWith(link.href.replace(/\/$/, "") + "/"));
 
           if (link.scrollTargetOnHome && isHome) {
             return (
@@ -86,14 +116,14 @@ export default function Nav() {
           );
         })}
         <span style={{ opacity: 0.3 }}>/</span>
-        <button
-          onClick={handleDisabledClick}
-          aria-disabled="true"
-          title="Locale switching coming soon"
-          style={{ opacity: 0.3, cursor: "not-allowed" }}
+        <Link
+          href={switcherHref as Route}
+          data-cursor-hover
+          aria-label="Switch language"
+          style={{ color: "var(--accent)" }}
         >
-          EN
-        </button>
+          {LOCALE_TOGGLE_LABEL[locale]}
+        </Link>
       </div>
       <style>{`
         .top-nav {
@@ -142,3 +172,6 @@ export default function Nav() {
     </nav>
   );
 }
+
+/** Default locale fallback prop helper (for pages forgetting to pass locale) */
+export const DEFAULT_NAV_LOCALE: Locale = DEFAULT_LOCALE;

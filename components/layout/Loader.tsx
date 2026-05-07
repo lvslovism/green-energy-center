@@ -8,7 +8,7 @@ const STORAGE_KEY = "greentech_loader_seen";
  * 首次進站 loader，sessionStorage gate（第二次以後跳過）。
  * 進度條最長 1.2s，超時強制 finish。
  */
-export default function Loader() {
+export default function Loader({ brand }: { brand: string }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
   const percentRef = useRef<HTMLSpanElement>(null);
@@ -117,7 +117,7 @@ export default function Loader() {
             letterSpacing: "-0.025em",
           }}
         >
-          綠能科技
+          {brand}
         </span>
       </div>
       <div

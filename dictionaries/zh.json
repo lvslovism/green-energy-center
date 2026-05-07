@@ -1,0 +1,289 @@
+{
+  "common": {
+    "nav": {
+      "products": "產品",
+      "technology": "技術",
+      "about": "關於",
+      "contact": "聯絡",
+      "brand": "綠能科技"
+    },
+    "footer": {
+      "tagline": "一起重新定義能量。",
+      "copyright": "© 2025 綠能科技股份有限公司",
+      "address": "台北市信義區松仁路 100 號 15F",
+      "locales": "EN / 繁中 / 简中 / JP"
+    },
+    "cta": {
+      "contact_us": "聯繫我們 →",
+      "view_specs": "VIEW SPECS →",
+      "inquiry_title": "需要技術規格書或報價？",
+      "inquiry_desc": "儲能方案團隊 24 小時內回覆。"
+    }
+  },
+  "home": {
+    "meta_title": "綠能科技 — 儲存能量的每一種可能",
+    "meta_description": "鈉離子電池、高能量密度鋰電池、全超電容。從材料到系統的全方位儲能方案。",
+    "hero": {
+      "live_badge": "LIVE",
+      "eyebrow_segments": ["NEXT-GEN ENERGY STORAGE", "EST. 2024", "TPE"],
+      "title_line_1": "儲存能量的",
+      "title_line_2": "每一種<em>可能</em>。",
+      "subtitle": "從鈉離子到全超電容，我們以材料工程重新定義電池的能量密度、壽命與安全邊界。",
+      "cta_primary_label": "探索技術",
+      "cta_primary_url": "/technology/",
+      "cta_secondary_label": "觀看簡介",
+      "cta_secondary_url": "#intro",
+      "scroll": "SCROLL",
+      "meta_items": [
+        { "label": "PRODUCT_LINES", "value": "03" },
+        { "label": "PATENTS", "value": "14" },
+        { "label": "PARTNERS", "value": "27" }
+      ]
+    },
+    "products": {
+      "label": "01 / PRODUCT_MATRIX",
+      "title": "三條產品線，<em>一個能量未來。</em>"
+    },
+    "stats": {
+      "label": "02 / VALIDATED",
+      "title": "數據驗證，<em>不靠口號。</em>",
+      "items": [
+        { "value": 340, "suffix": null, "label": "Wh / kg", "desc": "高鎳體系實測能量密度，較市售平均高 28%。" },
+        { "value": 6000, "suffix": "+", "label": "CYCLES", "desc": "鈉電在 80% 容量保持率下的循環壽命實驗數據。" },
+        { "value": 98, "suffix": "%", "label": "EFFICIENCY", "desc": "超電容混合系統的往返能源效率（round-trip）。" }
+      ]
+    },
+    "vision": {
+      "label": "03 / VISION",
+      "text": "當化石燃料退場、再生能源接軌的<em>百年之交</em>，儲能將是文明維持運轉的<em>關鍵節點</em>——我們以材料、製程與系統三層創新，讓<em>每一度電</em>都能被妥善保存。"
+    },
+    "contact_cta": {
+      "label": "04 / CONTACT",
+      "title": "一起重新定義<br/><em>能量。</em>",
+      "button": "聯絡我們"
+    }
+  },
+  "products": {
+    "shared": {
+      "breadcrumb_home": "首頁",
+      "breadcrumb_products": "產品",
+      "tabs": {
+        "specs": "規格",
+        "performance": "效能對比",
+        "applications": "應用場景",
+        "documents": "文件下載"
+      },
+      "panels": {
+        "specs_idx": "01 / SPECIFICATION",
+        "specs_title": "完整規格表",
+        "performance_idx": "02 / BENCHMARK",
+        "performance_title": "效能對比",
+        "performance_sub": "自家產品（accent 色）vs. 市場平均值（dim）四項關鍵指標。",
+        "applications_idx": "03 / APPLICATIONS",
+        "applications_title": "應用場景",
+        "documents_idx": "04 / DOCUMENTS",
+        "documents_title": "技術文件",
+        "documents_sub": "正式文件正建構中，目前以 hardcoded 範例呈現，Step 6 接 CMS 後即可下載。"
+      },
+      "download": "DOWNLOAD",
+      "ours_label": "OURS",
+      "market_label": "Market avg",
+      "lower_better": "(LOWER = BETTER)",
+      "perf_note_prefix": "資料來源：自家實驗 vs. 公開資料平均（2025）。標示 ",
+      "perf_note_em": "lower = better",
+      "perf_note_suffix": " 的指標已在圖表上反向呈現以利視覺對比，tooltip 顯示原始值。",
+      "cta_eyebrow": "— 取得樣品",
+      "cta_title_pre": "準備好為你的產品<br/>整合 ",
+      "cta_title_post": " 了嗎？",
+      "cta_desc": "提供應用情境與年使用量，我們的工程師會在 3 個工作日內回覆完整方案。",
+      "cta_button": "聯絡銷售",
+      "cross_label": "— 其他產品線"
+    },
+    "items": {
+      "sodium-ion": {
+        "name": "鈉離子電池",
+        "name_en": "Sodium-ion cell",
+        "tagline": "原料豐沛、低溫穩定、循環次數突破 6,000 次。為儲能電廠與商用車隊提供可規模化的鋰電替代方案。",
+        "card_meta": "SODIUM-ION CELL",
+        "card_desc": "原料豐沛、低溫穩定、循環次數突破 6,000 次。為儲能電廠與商用車隊提供可規模化的鋰電替代方案。",
+        "use_cases": [
+          { "icon": "Zap", "title": "電網級儲能", "description": "搭配再生能源，為電網提供秒級頻率調節與小時級能量平衡。" },
+          { "icon": "Truck", "title": "商用車隊", "description": "低溫啟動穩定、循環壽命長，最適合都市配送與固定路線車隊。" },
+          { "icon": "Sun", "title": "離網太陽能", "description": "白天充電、夜間放電，週期性高頻使用下保持容量保留率。" },
+          { "icon": "Radio", "title": "通訊基站", "description": "備援電源耐受極端溫度，免空調機房即可長期穩定運作。" }
+        ],
+        "documents": [
+          { "name": "產品規格書 (Datasheet)" },
+          { "name": "UN38.3 測試報告" },
+          { "name": "MSDS / SDS 安全資料表" },
+          { "name": "3D CAD 模型" }
+        ]
+      },
+      "lithium-ion": {
+        "name": "高能量密度鋰電池",
+        "name_en": "Lithium-ion high-nickel",
+        "tagline": "340 Wh/kg 級高鎳體系，搭配自研複合電解質，能量密度與安全性雙重突破。為電動車、航太與消費電子而生。",
+        "card_meta": "LITHIUM-ION HIGH-NICKEL",
+        "card_desc": "340 Wh/kg 級高鎳體系，搭配自研複合電解質，能量密度與安全性雙重突破。為電動車、航太與消費電子而生。",
+        "use_cases": [
+          { "icon": "Car", "title": "電動車動力", "description": "高能量密度 + 4C 快充，500km+ 續航搭配 15 分鐘充電。" },
+          { "icon": "Plane", "title": "航太電源", "description": "輕量化 pouch 形態，符合 DO-311A 航太電源規範。" },
+          { "icon": "Smartphone", "title": "消費電子", "description": "薄型化設計適合筆電、無人機、AR/VR 裝置。" },
+          { "icon": "HeartPulse", "title": "醫療設備", "description": "穩定電壓平台支援可攜式診斷儀器與電動手術工具。" }
+        ],
+        "documents": [
+          { "name": "產品規格書 (Datasheet)" },
+          { "name": "IEC 62660 測試報告" },
+          { "name": "MSDS / SDS 安全資料表" },
+          { "name": "3D CAD 模型" }
+        ]
+      },
+      "supercapacitor": {
+        "name": "全超電容",
+        "name_en": "Supercapacitor",
+        "tagline": "秒級充放電、百萬次循環。搭配電池形成混合儲能系統，承擔尖峰功率輸出與煞車能量回收。",
+        "card_meta": "SUPERCAPACITOR",
+        "card_desc": "秒級充放電、百萬次循環。搭配電池形成混合儲能系統，承擔尖峰功率輸出與煞車能量回收。",
+        "use_cases": [
+          { "icon": "RefreshCw", "title": "煞車能量回收", "description": "瞬時吸收動能轉電能，效率達 95% 以上、毫秒級響應。" },
+          { "icon": "Activity", "title": "電網頻率調節", "description": "百萬次循環免維護，承擔再生能源造成的高頻率波動。" },
+          { "icon": "ShieldCheck", "title": "UPS 不斷電", "description": "毫秒切換、無維護週期，取代傳統鉛酸電池備援系統。" },
+          { "icon": "Anchor", "title": "港口起重機", "description": "重複起降的能量回收與功率峰值削減，降低柴油發電機負荷。" }
+        ],
+        "documents": [
+          { "name": "產品規格書 (Datasheet)" },
+          { "name": "AEC-Q200 測試報告" },
+          { "name": "MSDS / SDS 安全資料表" },
+          { "name": "應用筆記 (Application note)" }
+        ]
+      }
+    }
+  },
+  "technology": {
+    "meta_title": "技術實力 | 綠能科技",
+    "meta_description": "從材料科學到系統整合，綠能科技的三層自主研發技術架構。",
+    "header_eyebrow": "— TECHNOLOGY",
+    "header_title": "技術實力",
+    "header_sub": "從材料分子設計到系統級能源管理，每一層都是自主研發。",
+    "pillars": {
+      "label": "01 / CORE TECHNOLOGY",
+      "title": "三層技術架構",
+      "items": [
+        { "icon": "Atom", "title": "材料科學", "desc": "自研正極材料與電解質配方。鈉電正極採用層狀氧化物體系，高鎳鋰電搭配複合固態電解質。" },
+        { "icon": "Cog", "title": "製程工程", "desc": "乾法電極塗佈技術，良率 98.5%。單線日產能 2 GWh，製程耗水量較傳統降低 70%。" },
+        { "icon": "Cpu", "title": "系統整合", "desc": "自研 BMS 晶片 + 雲端能源管理平台。支援鈉電 / 鋰電 / 超電容混合架構，AI 預測性維護。" }
+      ]
+    },
+    "rd": {
+      "label": "02 / R&D",
+      "title": "研發實力",
+      "stats": [
+        { "value": "127", "label": "Patents" },
+        { "value": "89", "label": "R&D Engineers" },
+        { "value": "18%", "label": "Revenue to R&D" },
+        { "value": "3", "label": "Research Labs" }
+      ],
+      "certs_label": "— CERTIFICATIONS",
+      "certs": ["ISO 9001", "ISO 14001", "IATF 16949", "UL 1973", "IEC 62619", "UN38.3"]
+    },
+    "roadmap": {
+      "label": "03 / ROADMAP",
+      "title": "技術里程碑",
+      "items": [
+        { "year": "2024 Q4", "content": "鈉離子電池量產線投產（Phase 1: 2 GWh）" },
+        { "year": "2025 Q2", "content": "高鎳鋰電池 340 Wh/kg pilot line 驗證完成" },
+        { "year": "2025 Q4", "content": "超電容模組通過車規 AEC-Q200 認證" },
+        { "year": "2026 Q2", "content": "混合儲能系統（鈉電 + 超電容）首個 MW 級案場交付" }
+      ]
+    }
+  },
+  "about": {
+    "meta_title": "關於我們 | 綠能科技",
+    "meta_description": "綠能科技的故事、使命與核心團隊。從 2021 年台北實驗室起步，致力於下一代儲能技術。",
+    "header_eyebrow": "— ABOUT",
+    "header_title": "關於我們",
+    "header_sub": "從 2021 年台北實驗室起步，致力於下一代儲能技術。",
+    "story": {
+      "label": "01 / OUR STORY",
+      "title": "重新定義儲能的可能",
+      "p1": "綠能科技成立於 2021 年，由一群來自電化學、材料科學與能源系統的研究者創辦。我們相信，下一代儲能技術不該只是鋰電池的改良，而是從材料根本出發的全新解法。",
+      "p2_before": "從台北實驗室的第一顆鈉離子原型電芯，到今天三條產品線、兩座量產基地，我們始終聚焦一件事：",
+      "p2_accent": "讓每一度電都能被妥善保存。"
+    },
+    "mission": {
+      "label": "02 / MISSION",
+      "title": "使命與願景",
+      "mission_label": "— MISSION",
+      "mission_text": "以材料創新驅動儲能成本持續下降，加速全球能源轉型。",
+      "vision_label": "— VISION",
+      "vision_text": "2030 年前成為亞太區鈉離子儲能系統市佔率第一的技術供應商。"
+    },
+    "team": {
+      "label": "03 / TEAM",
+      "title": "核心團隊",
+      "members": [
+        { "initials": "CL", "name": "Chen Li", "role": "CEO / Co-founder" },
+        { "initials": "WH", "name": "Wang Hao", "role": "CTO" },
+        { "initials": "LY", "name": "Lin Yu", "role": "VP Materials" },
+        { "initials": "ZW", "name": "Zhang Wei", "role": "VP Engineering" }
+      ],
+      "note": "團隊成員照片與完整介紹將於正式上線前更新。"
+    },
+    "milestones": {
+      "label": "04 / MILESTONES",
+      "title": "發展歷程",
+      "items": [
+        { "year": "2021", "content": "台北實驗室成立，完成首顆鈉離子原型電芯" },
+        { "year": "2022", "content": "Pre-A 輪融資完成，啟動中試線建設" },
+        { "year": "2023", "content": "超電容產品線量產出貨，首批客戶交付" },
+        { "year": "2024", "content": "鈉電量產線投產（2 GWh），取得 ISO 9001 / 14001" },
+        { "year": "2025", "content": "高鎳鋰電池進入 pilot 階段，團隊擴展至 200+ 人" }
+      ]
+    }
+  },
+  "contact": {
+    "meta_title": "聯繫我們 | 綠能科技",
+    "meta_description": "聯繫綠能科技團隊，諮詢鈉離子電池、鋰電池與超電容儲能方案。",
+    "header_eyebrow": "— CONTACT",
+    "header_title": "聯繫我們",
+    "header_sub": "產品諮詢、合作洽談或技術支援，我們的團隊將在 24 小時內回覆。",
+    "section_label": "01 / GET IN TOUCH",
+    "section_title": "寄信給我們",
+    "form": {
+      "name_label": "姓名",
+      "name_placeholder": "Your name",
+      "email_label": "Email",
+      "email_placeholder": "email@company.com",
+      "company_label": "公司名稱",
+      "company_placeholder": "Company name",
+      "product_label": "感興趣的產品",
+      "product_default": "請選擇產品線",
+      "product_options": [
+        { "value": "sodium-ion", "label": "鈉離子電池" },
+        { "value": "lithium-ion", "label": "高能量密度鋰電池" },
+        { "value": "supercapacitor", "label": "全超電容" },
+        { "value": "hybrid", "label": "混合儲能系統" },
+        { "value": "other", "label": "其他" }
+      ],
+      "message_label": "訊息",
+      "message_placeholder": "Tell us about your project or requirements...",
+      "submit": "送出詢問",
+      "submitting": "送出中…",
+      "error": "送出失敗",
+      "success_title": "感謝您的詢問",
+      "success_text": "我們將在 24 小時內回覆。",
+      "success_reset": "再送一筆"
+    },
+    "info": {
+      "office_label": "OFFICE",
+      "office_value": "台北市信義區松仁路 100 號 15F",
+      "email_label": "EMAIL",
+      "email_value": "info@greentech.tw",
+      "phone_label": "PHONE",
+      "phone_value": "+886 2 2720-XXXX",
+      "hours_label": "HOURS",
+      "hours_value": "Mon - Fri, 09:00 - 18:00 (GMT+8)",
+      "map_placeholder": "MAP PLACEHOLDER"
+    }
+  }
+}

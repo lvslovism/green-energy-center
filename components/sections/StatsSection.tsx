@@ -29,7 +29,13 @@ function Counter({ target }: { target: number }) {
   return <span ref={ref}>0</span>;
 }
 
-export default function StatsSection({ stats }: { stats: StatItem[] }) {
+type StatsSectionProps = {
+  stats: StatItem[];
+  label: string;
+  title: string;
+};
+
+export default function StatsSection({ stats, label, title }: StatsSectionProps) {
   return (
     <section
       id="stats"
@@ -53,10 +59,10 @@ export default function StatsSection({ stats }: { stats: StatItem[] }) {
         >
           <div>
             <RevealUp>
-              <div className="section-index">02 / VALIDATED</div>
+              <div className="section-index">{label}</div>
             </RevealUp>
             <RevealUp>
-              <h2 className="section-title" dangerouslySetInnerHTML={{ __html: "數據驗證，<em>不靠口號。</em>" }} />
+              <h2 className="section-title" dangerouslySetInnerHTML={{ __html: title }} />
             </RevealUp>
           </div>
         </div>

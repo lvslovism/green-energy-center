@@ -2,14 +2,25 @@
 import { useState, type FormEvent } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
-const PRODUCT_OPTIONS = [
-  { value: "", label: "請選擇產品線", disabled: true },
-  { value: "sodium-ion", label: "鈉離子電池" },
-  { value: "lithium-ion", label: "高能量密度鋰電池" },
-  { value: "supercapacitor", label: "全超電容" },
-  { value: "hybrid", label: "混合儲能系統" },
-  { value: "other", label: "其他" },
-];
+export type ContactFormStrings = {
+  name_label: string;
+  name_placeholder: string;
+  email_label: string;
+  email_placeholder: string;
+  company_label: string;
+  company_placeholder: string;
+  product_label: string;
+  product_default: string;
+  product_options: { value: string; label: string }[];
+  message_label: string;
+  message_placeholder: string;
+  submit: string;
+  submitting: string;
+  error: string;
+  success_title: string;
+  success_text: string;
+  success_reset: string;
+};
 
 type FormState = {
   name: string;
@@ -29,7 +40,7 @@ const INITIAL: FormState = {
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
-export default function ContactForm() {
+export default function ContactForm({ strings }: { strings: ContactFormStrings }) {
   const [data, setData] = useState<FormState>(INITIAL);
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
@@ -53,7 +64,7 @@ export default function ContactForm() {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = (await res.json()) as { success?: boolean; message?: string };
-      if (!json.success) throw new Error(json.message || "提交失敗");
+      if (!json.success) throw new Error(json.message || "Submission failed");
       setStatus("success");
     } catch (err) {
       setStatus("error");
@@ -67,8 +78,8 @@ export default function ContactForm() {
         <div className="cf-success-icon">
           <CheckCircle2 size={44} strokeWidth={1.4} />
         </div>
-        <h3 className="cf-success-title">感謝您的詢問</h3>
-        <p className="cf-success-text">我們將在 24 小時內回覆。</p>
+        <h3 className="cf-success-title">{strings.success_title}</h3>
+        <p className="cf-success-text">{strings.success_text}</p>
         <button
           type="button"
           className="cf-success-reset"
@@ -78,7 +89,7 @@ export default function ContactForm() {
             setStatus("idle");
           }}
         >
-          再送一筆
+          {strings.success_reset}
         </button>
       </div>
     );
@@ -89,13 +100,14 @@ export default function ContactForm() {
       <div className="cf-row">
         <label className="cf-field">
           <span className="cf-label">
-            姓名<span className="cf-req">*</span>
+            {strings.name_label}
+            <span className="cf-req">*</span>
           </span>
           <input
             className="cf-input"
             name="name"
             type="text"
-            placeholder="Your name"
+            placeholder={strings.name_placeholder}
             value={data.name}
             onChange={update("name")}
             required
@@ -104,13 +116,14 @@ export default function ContactForm() {
         </label>
         <label className="cf-field">
           <span className="cf-label">
-            Email<span className="cf-req">*</span>
+            {strings.email_label}
+            <span className="cf-req">*</span>
           </span>
           <input
             className="cf-input"
             name="email"
             type="email"
-            placeholder="email@company.com"
+            placeholder={strings.email_placeholder}
             value={data.email}
             onChange={update("email")}
             required
@@ -120,12 +133,12 @@ export default function ContactForm() {
       </div>
 
       <label className="cf-field">
-        <span className="cf-label">公司名稱</span>
+        <span className="cf-label">{strings.company_label}</span>
         <input
           className="cf-input"
           name="company"
           type="text"
-          placeholder="Company name"
+          placeholder={strings.company_placeholder}
           value={data.company}
           onChange={update("company")}
           data-cursor-hover
@@ -133,7 +146,7 @@ export default function ContactForm() {
       </label>
 
       <label className="cf-field">
-        <span className="cf-label">感興趣的產品</span>
+        <span className="cf-label">{strings.product_label}</span>
         <select
           className="cf-input cf-select"
           name="product"
@@ -141,8 +154,11 @@ export default function ContactForm() {
           onChange={update("product")}
           data-cursor-hover
         >
-          {PRODUCT_OPTIONS.map((o) => (
-            <option key={o.value} value={o.value} disabled={o.disabled}>
+          <option value="" disabled>
+            {strings.product_default}
+          </option>
+          {strings.product_options.map((o) => (
+            <option key={o.value} value={o.value}>
               {o.label}
             </option>
           ))}
@@ -151,12 +167,13 @@ export default function ContactForm() {
 
       <label className="cf-field">
         <span className="cf-label">
-          訊息<span className="cf-req">*</span>
+          {strings.message_label}
+          <span className="cf-req">*</span>
         </span>
         <textarea
           className="cf-input cf-textarea"
           name="message"
-          placeholder="Tell us about your project or requirements..."
+          placeholder={strings.message_placeholder}
           value={data.message}
           onChange={update("message")}
           required
@@ -167,7 +184,8 @@ export default function ContactForm() {
 
       {status === "error" && (
         <div className="cf-error" role="alert">
-          送出失敗：{errorMsg || "請稍後再試。"}
+          {strings.error}
+          {errorMsg && `：${errorMsg}`}
         </div>
       )}
 
@@ -177,7 +195,7 @@ export default function ContactForm() {
         data-cursor-hover
         disabled={status === "submitting"}
       >
-        <span>{status === "submitting" ? "送出中…" : "送出詢問"}</span>
+        <span>{status === "submitting" ? strings.submitting : strings.submit}</span>
         <ArrowRight size={16} strokeWidth={1.6} />
       </button>
     </form>

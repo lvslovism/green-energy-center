@@ -1,39 +1,46 @@
 import { ArrowUpRight } from "lucide-react";
-import type { Product } from "@/lib/products";
-import { getOtherProducts } from "@/lib/products";
+import type { LocalizedProduct } from "@/lib/i18n/adapters";
+import { getOtherLocalizedProducts } from "@/lib/i18n/adapters";
+import type { Locale } from "@/lib/i18n/locales";
+import type { Dictionary } from "@/lib/i18n";
 
-export default function ProductCTA({ product }: { product: Product }) {
-  const others = getOtherProducts(product.slug);
+type ProductCTAProps = {
+  product: LocalizedProduct;
+  locale: Locale;
+  dict: Dictionary;
+};
+
+export default function ProductCTA({ product, locale, dict }: ProductCTAProps) {
+  const others = getOtherLocalizedProducts(product.slug, dict);
+  const shared = dict.products.shared;
 
   return (
     <section className="product-cta-section">
       <div className="pcta-inner">
-        {/* 頂部 CTA */}
         <div className="pcta-top">
           <div>
-            <span className="pcta-eyebrow">— 取得樣品</span>
-            <h2 className="pcta-title">
-              準備好為你的產品<br />
-              整合 <em>{product.nameZh}</em> 了嗎？
-            </h2>
-            <p className="pcta-desc">
-              提供應用情境與年使用量，我們的工程師會在 3 個工作日內回覆完整方案。
-            </p>
+            <span className="pcta-eyebrow">{shared.cta_eyebrow}</span>
+            <h2
+              className="pcta-title"
+              dangerouslySetInnerHTML={{
+                __html: `${shared.cta_title_pre}<em>${product.name}</em>${shared.cta_title_post}`,
+              }}
+            />
+            <p className="pcta-desc">{shared.cta_desc}</p>
           </div>
-          <a href="/#contact" className="pcta-button" data-cursor-hover>
-            <span>聯絡銷售</span>
+          <a href={`/${locale}/contact/`} className="pcta-button" data-cursor-hover>
+            <span>{shared.cta_button}</span>
             <ArrowUpRight size={16} strokeWidth={1.6} />
           </a>
         </div>
 
-        {/* 交叉連結 */}
         <div className="pcta-cross">
-          <div className="pcta-cross-label">— 其他產品線</div>
+          <div className="pcta-cross-label">{shared.cross_label}</div>
           <div className="pcta-cross-grid">
             {others.map((p) => (
               <a
                 key={p.slug}
-                href={`/products/${p.slug}/`}
+                href={`/${locale}/products/${p.slug}/`}
                 className="pcta-cross-card"
                 data-cursor-hover
               >
@@ -41,7 +48,7 @@ export default function ProductCTA({ product }: { product: Product }) {
                   <span>{p.nameEn.toUpperCase()}</span>
                   <ArrowUpRight size={14} strokeWidth={1.5} />
                 </div>
-                <div className="pcta-cross-title">{p.nameZh}</div>
+                <div className="pcta-cross-title">{p.name}</div>
                 <div className="pcta-cross-grade">{p.grade}</div>
               </a>
             ))}

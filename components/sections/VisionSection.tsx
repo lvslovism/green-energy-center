@@ -1,7 +1,12 @@
 "use client";
 import RevealUp from "@/components/motion/RevealUp";
 
-export default function VisionSection({ text }: { text: string }) {
+type VisionSectionProps = {
+  label: string;
+  text: string;
+};
+
+export default function VisionSection({ label, text }: VisionSectionProps) {
   return (
     <section
       id="vision"
@@ -16,7 +21,7 @@ export default function VisionSection({ text }: { text: string }) {
       <div style={{ maxWidth: 1500, margin: "0 auto" }}>
         <RevealUp>
           <div className="section-index" style={{ marginBottom: "3rem" }}>
-            03 / VISION
+            {label}
           </div>
         </RevealUp>
         <RevealUp>
