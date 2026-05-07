@@ -1,42 +1,53 @@
 "use client";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import type { Route } from "next";
 
-const SECTION_LINKS = [
-  { label: "產品", id: "products" },
-  // 暫時指向 #stats，Step 2 才會有正式 /technology 頁
-  { label: "技術", id: "stats" },
-  { label: "關於", id: "vision" },
-  { label: "聯絡", id: "contact" },
+type NavLink = {
+  label: string;
+  href: string;
+  /** 若 truthy，當前頁是首頁時點擊改為 smooth scroll 到指定 id */
+  scrollTargetOnHome?: string;
+};
+
+const NAV_LINKS: NavLink[] = [
+  { label: "產品", href: "/#products", scrollTargetOnHome: "products" },
+  { label: "技術", href: "/technology" },
+  { label: "關於", href: "/about" },
+  { label: "聯絡", href: "/contact" },
 ];
 
-const handleAnchor = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-  e.preventDefault();
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth" });
-  }
-};
-
-const handleDisabledClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  e.preventDefault();
-};
-
 export default function Nav() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  const handleHomeAnchor = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (!isHome) return;
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleBrand = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isHome) return;
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleDisabledClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <nav className="top-nav">
-      <a
-        href="#"
-        className="brand-mark"
-        data-cursor-hover
-        onClick={(e) => {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }}
-      >
+      <Link href={"/" as Route} className="brand-mark" data-cursor-hover onClick={handleBrand}>
         <span className="brand-square" />
         <span style={{ fontSize: "1.125rem", fontWeight: 500, letterSpacing: "-0.025em" }}>
           綠能科技
         </span>
-      </a>
+      </Link>
       <div
         className="hidden md:flex items-center gap-8 font-mono"
         style={{
@@ -46,25 +57,40 @@ export default function Nav() {
           textTransform: "uppercase",
         }}
       >
-        {SECTION_LINKS.map((link) => (
-          <a
-            key={link.id}
-            href={`#${link.id}`}
-            onClick={(e) => handleAnchor(e, link.id)}
-            data-cursor-hover
-          >
-            {link.label}
-          </a>
-        ))}
+        {NAV_LINKS.map((link) => {
+          const isActive =
+            !link.scrollTargetOnHome &&
+            (pathname === link.href || pathname?.startsWith(link.href + "/"));
+
+          if (link.scrollTargetOnHome && isHome) {
+            return (
+              <a
+                key={link.href}
+                href={`#${link.scrollTargetOnHome}`}
+                onClick={(e) => handleHomeAnchor(e, link.scrollTargetOnHome!)}
+                data-cursor-hover
+              >
+                {link.label}
+              </a>
+            );
+          }
+          return (
+            <Link
+              key={link.href}
+              href={link.href as Route}
+              data-cursor-hover
+              style={isActive ? { color: "var(--accent)" } : undefined}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
         <span style={{ opacity: 0.3 }}>/</span>
         <button
           onClick={handleDisabledClick}
           aria-disabled="true"
           title="Locale switching coming soon"
-          style={{
-            opacity: 0.3,
-            cursor: "not-allowed",
-          }}
+          style={{ opacity: 0.3, cursor: "not-allowed" }}
         >
           EN
         </button>
