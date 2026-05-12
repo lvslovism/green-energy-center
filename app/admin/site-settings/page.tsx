@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Save, Plus, Trash2, ChevronUp, ChevronDown } from "lucide-react";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import BilingualInput from "@/components/admin/BilingualInput";
+import Collapsible from "@/components/admin/Collapsible";
 import { useToast, DEPLOY_HINT } from "@/components/admin/Toast";
 
 type Bi = { zh: string; en: string };
@@ -138,8 +139,7 @@ export default function SiteSettingsPage() {
       </div>
 
       {/* Hero */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Hero</h2>
+      <Collapsible title="Hero" defaultOpen>
         <BilingualInput
           label="Title line 1"
           value={data.hero.title_line_1}
@@ -161,11 +161,10 @@ export default function SiteSettingsPage() {
           onChange={(v) => setData({ ...data, hero: { ...data.hero, subtitle: v } })}
           multiline
         />
-      </section>
+      </Collapsible>
 
       {/* Vision */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Vision</h2>
+      <Collapsible title="Vision">
         <div className="adm-field">
           <label className="adm-field-label">Label</label>
           <input
@@ -185,11 +184,10 @@ export default function SiteSettingsPage() {
           onChange={(v) => setData({ ...data, vision: { ...data.vision, description: v } })}
           multiline
         />
-      </section>
+      </Collapsible>
 
       {/* Stats */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Stats</h2>
+      <Collapsible title="Stats">
         <div className="adm-field">
           <label className="adm-field-label">Label</label>
           <input
@@ -298,11 +296,10 @@ export default function SiteSettingsPage() {
             </button>
           </div>
         </div>
-      </section>
+      </Collapsible>
 
       {/* Footer */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Footer</h2>
+      <Collapsible title="Footer">
         <BilingualInput
           label="Tagline"
           value={data.footer.tagline}
@@ -313,11 +310,10 @@ export default function SiteSettingsPage() {
           value={data.footer.copyright}
           onChange={(v) => setData({ ...data, footer: { ...data.footer, copyright: v } })}
         />
-      </section>
+      </Collapsible>
 
       {/* Contact info */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Contact info</h2>
+      <Collapsible title="Contact Info">
         <BilingualInput
           label="Office address"
           value={data.contact_info.office}
@@ -361,11 +357,10 @@ export default function SiteSettingsPage() {
             setData({ ...data, contact_info: { ...data.contact_info, hours: v } })
           }
         />
-      </section>
+      </Collapsible>
 
       {/* SEO */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">SEO defaults</h2>
+      <Collapsible title="SEO Defaults">
         <BilingualInput
           label="Title"
           value={data.seo.title}
@@ -377,7 +372,7 @@ export default function SiteSettingsPage() {
           onChange={(v) => setData({ ...data, seo: { ...data.seo, description: v } })}
           multiline
         />
-      </section>
+      </Collapsible>
 
       <div className="adm-action-bar">
         <button type="button" className="adm-btn adm-btn-primary" onClick={save} disabled={busy}>

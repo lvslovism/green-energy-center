@@ -4,6 +4,7 @@ import { Save } from "lucide-react";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import BilingualInput from "@/components/admin/BilingualInput";
 import ArrayEditor from "@/components/admin/ArrayEditor";
+import Collapsible from "@/components/admin/Collapsible";
 import { useToast, DEPLOY_HINT } from "@/components/admin/Toast";
 
 type Bi = { zh: string; en: string };
@@ -170,8 +171,7 @@ export default function AdminTechnologyPage() {
         </button>
       </div>
 
-      <section className="adm-section">
-        <h2 className="adm-section-title">Pillars</h2>
+      <Collapsible title="Pillars" defaultOpen>
         <ArrayEditor<Pillar>
           items={pillars}
           onChange={setPillars}
@@ -208,10 +208,9 @@ export default function AdminTechnologyPage() {
             </>
           )}
         />
-      </section>
+      </Collapsible>
 
-      <section className="adm-section">
-        <h2 className="adm-section-title">R&amp;D Stats</h2>
+      <Collapsible title="R&D Stats">
         <ArrayEditor<RdStat>
           items={stats}
           onChange={setStats}
@@ -236,10 +235,9 @@ export default function AdminTechnologyPage() {
             </>
           )}
         />
-      </section>
+      </Collapsible>
 
-      <section className="adm-section">
-        <h2 className="adm-section-title">Certifications</h2>
+      <Collapsible title="Certifications">
         <ArrayEditor<Cert>
           items={certs}
           onChange={setCerts}
@@ -257,10 +255,9 @@ export default function AdminTechnologyPage() {
             </div>
           )}
         />
-      </section>
+      </Collapsible>
 
-      <section className="adm-section">
-        <h2 className="adm-section-title">Roadmap</h2>
+      <Collapsible title="Roadmap">
         <ArrayEditor<Milestone>
           items={roadmap}
           onChange={setRoadmap}
@@ -287,7 +284,7 @@ export default function AdminTechnologyPage() {
             </>
           )}
         />
-      </section>
+      </Collapsible>
 
       <div className="adm-action-bar">
         <button type="button" className="adm-btn adm-btn-primary" onClick={save} disabled={busy}>

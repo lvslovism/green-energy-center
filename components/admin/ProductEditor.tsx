@@ -4,6 +4,7 @@ import { Save } from "lucide-react";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import BilingualInput from "@/components/admin/BilingualInput";
 import ArrayEditor from "@/components/admin/ArrayEditor";
+import Collapsible from "@/components/admin/Collapsible";
 import { useToast, DEPLOY_HINT } from "@/components/admin/Toast";
 
 type Bi = { zh: string; en: string };
@@ -167,8 +168,7 @@ export default function ProductEditor({ slug }: { slug: string }) {
       </div>
 
       {/* Basic */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Basic Info</h2>
+      <Collapsible title="Basic Info" defaultOpen>
         <BilingualInput label="Name" value={data.name} onChange={(v) => set({ name: v })} />
         <BilingualInput
           label="Name subtitle"
@@ -228,11 +228,10 @@ export default function ProductEditor({ slug }: { slug: string }) {
             />
           </div>
         </div>
-      </section>
+      </Collapsible>
 
       {/* Key specs (固定 4) */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Key specs (4)</h2>
+      <Collapsible title="Key Specs (4)">
         <ArrayEditor<KeySpec>
           items={data.key_specs}
           fixed
@@ -260,11 +259,10 @@ export default function ProductEditor({ slug }: { slug: string }) {
             </div>
           )}
         />
-      </section>
+      </Collapsible>
 
       {/* Specifications */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Specifications</h2>
+      <Collapsible title="Specifications">
         <ArrayEditor<Spec>
           items={data.specs}
           onChange={(v) => set({ specs: v })}
@@ -292,11 +290,10 @@ export default function ProductEditor({ slug }: { slug: string }) {
             </div>
           )}
         />
-      </section>
+      </Collapsible>
 
       {/* Performance */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Performance comparison</h2>
+      <Collapsible title="Performance">
         <ArrayEditor<Perf>
           items={data.performance}
           onChange={(v) => set({ performance: v })}
@@ -383,11 +380,10 @@ export default function ProductEditor({ slug }: { slug: string }) {
             </>
           )}
         />
-      </section>
+      </Collapsible>
 
       {/* Use cases */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Use cases</h2>
+      <Collapsible title="Use Cases">
         <ArrayEditor<UseCase>
           items={data.use_cases}
           onChange={(v) => set({ use_cases: v })}
@@ -424,11 +420,10 @@ export default function ProductEditor({ slug }: { slug: string }) {
             </>
           )}
         />
-      </section>
+      </Collapsible>
 
       {/* Documents */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">Documents</h2>
+      <Collapsible title="Documents">
         <ArrayEditor<DocItem>
           items={data.documents}
           onChange={(v) => set({ documents: v })}
@@ -479,11 +474,10 @@ export default function ProductEditor({ slug }: { slug: string }) {
             </>
           )}
         />
-      </section>
+      </Collapsible>
 
       {/* SEO */}
-      <section className="adm-section">
-        <h2 className="adm-section-title">SEO</h2>
+      <Collapsible title="SEO">
         <BilingualInput
           label="Title"
           value={data.seo.title}
@@ -495,7 +489,7 @@ export default function ProductEditor({ slug }: { slug: string }) {
           onChange={(v) => set({ seo: { ...data.seo, description: v } })}
           multiline
         />
-      </section>
+      </Collapsible>
 
       <div className="adm-action-bar">
         <button type="button" className="adm-btn adm-btn-primary" onClick={save} disabled={busy}>

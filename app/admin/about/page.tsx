@@ -4,6 +4,7 @@ import { Save } from "lucide-react";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import BilingualInput from "@/components/admin/BilingualInput";
 import ArrayEditor from "@/components/admin/ArrayEditor";
+import Collapsible from "@/components/admin/Collapsible";
 import { useToast, DEPLOY_HINT } from "@/components/admin/Toast";
 
 type Bi = { zh: string; en: string };
@@ -136,8 +137,7 @@ export default function AdminAboutPage() {
         </button>
       </div>
 
-      <section className="adm-section">
-        <h2 className="adm-section-title">Team members</h2>
+      <Collapsible title="Team Members" defaultOpen>
         <ArrayEditor<TeamMember>
           items={team}
           onChange={setTeam}
@@ -188,10 +188,9 @@ export default function AdminAboutPage() {
             </>
           )}
         />
-      </section>
+      </Collapsible>
 
-      <section className="adm-section">
-        <h2 className="adm-section-title">Milestones</h2>
+      <Collapsible title="Milestones">
         <ArrayEditor<Milestone>
           items={milestones}
           onChange={setMilestones}
@@ -217,7 +216,7 @@ export default function AdminAboutPage() {
             </>
           )}
         />
-      </section>
+      </Collapsible>
 
       <div className="adm-action-bar">
         <button type="button" className="adm-btn adm-btn-primary" onClick={save} disabled={busy}>

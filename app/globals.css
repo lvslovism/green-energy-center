@@ -1441,15 +1441,10 @@ body[data-admin="1"]::before { display: none; } /* 隱藏首頁網格 */
 body[data-admin="1"] * { cursor: auto !important; }
 
 .adm-shell {
-  display: grid;
-  grid-template-columns: 220px 1fr;
+  position: relative;
   min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-}
-@media (max-width: 768px) {
-  .adm-shell { grid-template-columns: 1fr; }
-  .adm-sidebar { display: none; }
 }
 .adm-sidebar {
   background: var(--admin-sidebar);
@@ -1458,9 +1453,16 @@ body[data-admin="1"] * { cursor: auto !important; }
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  position: sticky;
+  position: fixed;
   top: 0;
-  height: 100vh;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  overflow-y: auto;
+  z-index: 100;
+}
+@media (max-width: 768px) {
+  .adm-sidebar { display: none; }
 }
 .adm-brand {
   display: flex;
@@ -1562,8 +1564,52 @@ body[data-admin="1"] * { cursor: auto !important; }
 }
 .adm-content {
   padding: 2rem 2.5rem;
-  overflow-y: auto;
   max-width: 100%;
+  margin-left: 220px;
+}
+@media (max-width: 768px) {
+  .adm-content { margin-left: 0; }
+}
+
+/* Collapsible accordion */
+.adm-collapsible {
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+.adm-collapsible-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: var(--bg-soft);
+  border: none;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  letter-spacing: -0.005em;
+  transition: background 0.2s;
+}
+.adm-collapsible-header:hover {
+  background: var(--bg-soft-2);
+}
+.adm-collapsible-icon {
+  transition: transform 0.2s;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.adm-collapsible-icon--open {
+  transform: rotate(90deg);
+}
+.adm-collapsible-body {
+  padding: 1.25rem 1rem 1rem;
+  border-top: 1px solid var(--line-soft);
 }
 .adm-page-header {
   display: flex;
