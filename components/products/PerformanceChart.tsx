@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
-import type { PerformanceMetric } from "@/lib/products";
+import type { PerformanceMetric } from "@/lib/cms-helpers";
 
 const ACCENT = "#5EEAD4";
 const MARKET = "#3b4860";

@@ -1,5 +1,5 @@
 import { FileText, Shield, FileSpreadsheet, Box, Download, type LucideIcon } from "lucide-react";
-import type { ProductDocument } from "@/lib/products";
+import type { LocalizedDoc as ProductDocument } from "@/lib/cms-helpers";
 
 function pickIcon(name: string, type: string): LucideIcon {
   const lower = name.toLowerCase();

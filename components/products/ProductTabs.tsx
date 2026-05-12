@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import SpecGrid from "./SpecGrid";
 import UseCaseGrid from "./UseCaseGrid";
 import DocumentList from "./DocumentList";
-import type { LocalizedProduct } from "@/lib/i18n/adapters";
+import type { LocalizedProduct } from "@/lib/cms-helpers";
 
 const PerformanceChart = dynamic(() => import("./PerformanceChart"), {
   ssr: false,

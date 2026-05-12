@@ -12,36 +12,53 @@ import VisionSection from "@/components/sections/VisionSection";
 import ContactCTA from "@/components/sections/ContactCTA";
 import { getDictionary } from "@/lib/i18n";
 import { isLocale, type Locale } from "@/lib/i18n/locales";
+import { fetchSiteSettings, fetchProducts } from "@/lib/cms";
 import {
-  dictToHeroContent,
-  dictToHomeProducts,
+  localizeHero,
+  localizeStats,
+  localizeVision,
+  localizeFooter,
+  localizeSeo,
+  localizeProductCard,
   HOME_MARQUEE,
-  dictToStats,
-} from "@/lib/i18n/adapters";
+} from "@/lib/cms-helpers";
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
   const dict = getDictionary(locale);
+  const settings = await fetchSiteSettings();
+  const seo = localizeSeo(settings, locale);
   return {
-    title: dict.home.meta_title,
-    description: dict.home.meta_description,
+    title: seo.title || dict.home.meta_title,
+    description: seo.description || dict.home.meta_description,
     alternates: {
       canonical: `/${locale}/`,
-      languages: {
-        zh: "/zh/",
-        en: "/en/",
-        "x-default": "/zh/",
-      },
+      languages: { zh: "/zh/", en: "/en/", "x-default": "/zh/" },
     },
   };
 }
 
-export default function HomePage({ params }: { params: { locale: string } }) {
+export default async function HomePage({ params }: { params: { locale: string } }) {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
   const dict = getDictionary(locale);
-  const heroContent = dictToHeroContent(dict);
-  const homeProducts = dictToHomeProducts(dict);
-  const stats = dictToStats(dict);
+
+  const [settings, products] = await Promise.all([
+    fetchSiteSettings(),
+    fetchProducts(),
+  ]);
+
+  const heroContent = localizeHero(settings, locale, dict);
+  const stats = localizeStats(settings, locale, dict);
+  const vision = localizeVision(settings, locale, dict);
+  const footer = localizeFooter(settings, locale, dict);
+
+  // 產品卡：DB 為主，空陣列時 fallback 不渲染
+  const productCards =
+    products.length > 0 ? products.map((p) => localizeProductCard(p, locale)) : [];
 
   return (
     <LenisProvider>
@@ -52,16 +69,12 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         <Hero content={heroContent} variant="A" />
         <MarqueeSection items={HOME_MARQUEE} />
         <ProductMatrix
-          products={homeProducts}
+          products={productCards}
           label={dict.home.products.label}
           title={dict.home.products.title}
         />
-        <StatsSection
-          stats={stats}
-          label={dict.home.stats.label}
-          title={dict.home.stats.title}
-        />
-        <VisionSection label={dict.home.vision.label} text={dict.home.vision.text} />
+        <StatsSection stats={stats.items} label={stats.label} title={stats.title} />
+        <VisionSection label={vision.label} text={vision.text} />
         <ContactCTA
           label={dict.home.contact_cta.label}
           title={dict.home.contact_cta.title}
@@ -70,10 +83,10 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         />
       </main>
       <Footer
-        copyright={dict.common.footer.copyright}
-        address={dict.common.footer.address}
-        email="info@greentech.tw"
-        locales={dict.common.footer.locales}
+        copyright={footer.copyright}
+        address={footer.address}
+        email={footer.email}
+        locales={footer.locales}
       />
     </LenisProvider>
   );

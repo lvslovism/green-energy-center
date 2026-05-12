@@ -1,41 +1,44 @@
 import { ArrowUpRight } from "lucide-react";
-import type { LocalizedProduct } from "@/lib/i18n/adapters";
-import { getOtherLocalizedProducts } from "@/lib/i18n/adapters";
+import type { LocalizedProduct } from "@/lib/cms-helpers";
 import type { Locale } from "@/lib/i18n/locales";
-import type { Dictionary } from "@/lib/i18n";
 
 type ProductCTAProps = {
   product: LocalizedProduct;
+  others: LocalizedProduct[];
   locale: Locale;
-  dict: Dictionary;
+  strings: {
+    cta_eyebrow: string;
+    cta_title_pre: string;
+    cta_title_post: string;
+    cta_desc: string;
+    cta_button: string;
+    cross_label: string;
+  };
 };
 
-export default function ProductCTA({ product, locale, dict }: ProductCTAProps) {
-  const others = getOtherLocalizedProducts(product.slug, dict);
-  const shared = dict.products.shared;
-
+export default function ProductCTA({ product, others, locale, strings }: ProductCTAProps) {
   return (
     <section className="product-cta-section">
       <div className="pcta-inner">
         <div className="pcta-top">
           <div>
-            <span className="pcta-eyebrow">{shared.cta_eyebrow}</span>
+            <span className="pcta-eyebrow">{strings.cta_eyebrow}</span>
             <h2
               className="pcta-title"
               dangerouslySetInnerHTML={{
-                __html: `${shared.cta_title_pre}<em>${product.name}</em>${shared.cta_title_post}`,
+                __html: `${strings.cta_title_pre}<em>${product.name}</em>${strings.cta_title_post}`,
               }}
             />
-            <p className="pcta-desc">{shared.cta_desc}</p>
+            <p className="pcta-desc">{strings.cta_desc}</p>
           </div>
           <a href={`/${locale}/contact/`} className="pcta-button" data-cursor-hover>
-            <span>{shared.cta_button}</span>
+            <span>{strings.cta_button}</span>
             <ArrowUpRight size={16} strokeWidth={1.6} />
           </a>
         </div>
 
         <div className="pcta-cross">
-          <div className="pcta-cross-label">{shared.cross_label}</div>
+          <div className="pcta-cross-label">{strings.cross_label}</div>
           <div className="pcta-cross-grid">
             {others.map((p) => (
               <a

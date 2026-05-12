@@ -1,4 +1,4 @@
-import type { ProductSpec } from "@/lib/products";
+import type { ProductSpec } from "@/lib/cms-helpers";
 
 export default function SpecGrid({ specs }: { specs: ProductSpec[] }) {
   return (

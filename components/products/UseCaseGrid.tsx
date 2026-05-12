@@ -13,7 +13,7 @@ import {
   Anchor,
   type LucideIcon,
 } from "lucide-react";
-import type { UseCase } from "@/lib/products";
+import type { UseCase } from "@/lib/cms-helpers";
 
 const ICONS: Record<string, LucideIcon> = {
   Zap,

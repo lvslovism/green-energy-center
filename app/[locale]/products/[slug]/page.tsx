@@ -7,55 +7,79 @@ import Footer from "@/components/layout/Footer";
 import ProductHero from "@/components/products/ProductHero";
 import ProductTabs from "@/components/products/ProductTabs";
 import ProductCTA from "@/components/products/ProductCTA";
-import { products } from "@/lib/products";
 import { getDictionary } from "@/lib/i18n";
 import { LOCALES, isLocale, type Locale } from "@/lib/i18n/locales";
-import { getLocalizedProduct } from "@/lib/i18n/adapters";
+import {
+  fetchProducts,
+  fetchProductBySlug,
+  fetchSiteSettings,
+} from "@/lib/cms";
+import {
+  localizeProduct,
+  localizeProductSeo,
+  localizeFooter,
+} from "@/lib/cms-helpers";
+
+const PRODUCT_SLUGS = ["sodium-ion", "lithium-ion", "supercapacitor"] as const;
 
 export function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
   for (const locale of LOCALES) {
-    for (const p of products) {
-      params.push({ locale, slug: p.slug });
+    for (const slug of PRODUCT_SLUGS) {
+      params.push({ locale, slug });
     }
   }
   return params;
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: { locale: string; slug: string };
-}): Metadata {
+}): Promise<Metadata> {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
   const dict = getDictionary(locale);
-  const p = getLocalizedProduct(params.slug, dict);
-  if (!p) return { title: "Not found" };
+  const row = await fetchProductBySlug(params.slug);
+  if (!row) return { title: "Not found" };
+  const seo = localizeProductSeo(row, locale);
+  const localized = localizeProduct(row, locale);
   return {
-    title: `${p.name} | ${dict.common.nav.brand}`,
-    description: p.tagline,
+    title: seo.title || `${localized.name} | ${dict.common.nav.brand}`,
+    description: seo.description || localized.tagline,
     alternates: {
-      canonical: `/${locale}/products/${p.slug}/`,
+      canonical: `/${locale}/products/${row.slug}/`,
       languages: {
-        zh: `/zh/products/${p.slug}/`,
-        en: `/en/products/${p.slug}/`,
-        "x-default": `/zh/products/${p.slug}/`,
+        zh: `/zh/products/${row.slug}/`,
+        en: `/en/products/${row.slug}/`,
+        "x-default": `/zh/products/${row.slug}/`,
       },
     },
   };
 }
 
-export default function ProductPage({
+export default async function ProductPage({
   params,
 }: {
   params: { locale: string; slug: string };
 }) {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
   const dict = getDictionary(locale);
-  const product = getLocalizedProduct(params.slug, dict);
-  if (!product) notFound();
+
+  const [allRows, settings] = await Promise.all([
+    fetchProducts(),
+    fetchSiteSettings(),
+  ]);
+
+  const row = allRows.find((p) => p.slug === params.slug);
+  if (!row) notFound();
+
+  const product = localizeProduct(row, locale);
+  const others = allRows
+    .filter((p) => p.slug !== params.slug)
+    .map((p) => localizeProduct(p, locale));
 
   const shared = dict.products.shared;
+  const footer = localizeFooter(settings, locale, dict);
 
   return (
     <LenisProvider>
@@ -82,13 +106,25 @@ export default function ProductPage({
             perf_note_suffix: shared.perf_note_suffix,
           }}
         />
-        <ProductCTA product={product} locale={locale} dict={dict} />
+        <ProductCTA
+          product={product}
+          others={others}
+          locale={locale}
+          strings={{
+            cta_eyebrow: shared.cta_eyebrow,
+            cta_title_pre: shared.cta_title_pre,
+            cta_title_post: shared.cta_title_post,
+            cta_desc: shared.cta_desc,
+            cta_button: shared.cta_button,
+            cross_label: shared.cross_label,
+          }}
+        />
       </main>
       <Footer
-        copyright={dict.common.footer.copyright}
-        address={dict.common.footer.address}
-        email="info@greentech.tw"
-        locales={dict.common.footer.locales}
+        copyright={footer.copyright}
+        address={footer.address}
+        email={footer.email}
+        locales={footer.locales}
       />
     </LenisProvider>
   );

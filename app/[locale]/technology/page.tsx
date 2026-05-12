@@ -7,6 +7,19 @@ import Footer from "@/components/layout/Footer";
 import Timeline from "@/components/shared/Timeline";
 import { getDictionary } from "@/lib/i18n";
 import { isLocale, type Locale } from "@/lib/i18n/locales";
+import {
+  fetchSiteSettings,
+  fetchTechnologyPillars,
+  fetchRdStats,
+  fetchCertifications,
+  fetchMilestones,
+} from "@/lib/cms";
+import {
+  localizePillar,
+  localizeRdStat,
+  localizeMilestone,
+  localizeFooter,
+} from "@/lib/cms-helpers";
 
 const ICONS: Record<string, LucideIcon> = { Atom, Cog, Cpu };
 
@@ -23,10 +36,34 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   };
 }
 
-export default function TechnologyPage({ params }: { params: { locale: string } }) {
+export default async function TechnologyPage({ params }: { params: { locale: string } }) {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
   const dict = getDictionary(locale);
   const t = dict.technology;
+
+  const [pillarRows, rdRows, certRows, milestoneRows, settings] = await Promise.all([
+    fetchTechnologyPillars(),
+    fetchRdStats(),
+    fetchCertifications(),
+    fetchMilestones("technology"),
+    fetchSiteSettings(),
+  ]);
+
+  // DB → component shapes，空陣列時 fallback dict
+  const pillars =
+    pillarRows.length > 0
+      ? pillarRows.map((p) => localizePillar(p, locale))
+      : t.pillars.items;
+  const rdStats =
+    rdRows.length > 0
+      ? rdRows.map((r) => localizeRdStat(r, locale))
+      : t.rd.stats;
+  const certs = certRows.length > 0 ? certRows.map((c) => c.name) : t.rd.certs;
+  const milestones =
+    milestoneRows.length > 0
+      ? milestoneRows.map((m) => localizeMilestone(m, locale))
+      : t.roadmap.items;
+  const footer = localizeFooter(settings, locale, dict);
 
   return (
     <LenisProvider>
@@ -48,7 +85,7 @@ export default function TechnologyPage({ params }: { params: { locale: string } 
               <h2 className="section-title">{t.pillars.title}</h2>
             </div>
             <div className="pillar-grid">
-              {t.pillars.items.map((p, i) => {
+              {pillars.map((p, i) => {
                 const Icon = ICONS[p.icon] ?? Atom;
                 return (
                   <article className="pillar-card" key={p.title} data-cursor-hover>
@@ -72,7 +109,7 @@ export default function TechnologyPage({ params }: { params: { locale: string } 
               <h2 className="section-title">{t.rd.title}</h2>
             </div>
             <div className="rd-stat-grid">
-              {t.rd.stats.map((s, i) => (
+              {rdStats.map((s, i) => (
                 <div className="rd-stat-cell" key={s.label} data-idx={`0${i + 1}`}>
                   <div className="rd-stat-value">{s.value}</div>
                   <div className="rd-stat-label">{s.label}</div>
@@ -82,7 +119,7 @@ export default function TechnologyPage({ params }: { params: { locale: string } 
             <div className="cert-row">
               <div className="cert-label">{t.rd.certs_label}</div>
               <div className="cert-pills">
-                {t.rd.certs.map((c) => (
+                {certs.map((c) => (
                   <span className="cert-pill" key={c}>
                     {c}
                   </span>
@@ -98,15 +135,17 @@ export default function TechnologyPage({ params }: { params: { locale: string } 
               <div className="section-index">{t.roadmap.label}</div>
               <h2 className="section-title">{t.roadmap.title}</h2>
             </div>
-            <Timeline nodes={t.roadmap.items.map((it) => ({ year: it.year, content: it.content }))} />
+            <Timeline
+              nodes={milestones.map((it) => ({ year: it.year, content: it.content }))}
+            />
           </div>
         </section>
       </main>
       <Footer
-        copyright={dict.common.footer.copyright}
-        address={dict.common.footer.address}
-        email="info@greentech.tw"
-        locales={dict.common.footer.locales}
+        copyright={footer.copyright}
+        address={footer.address}
+        email={footer.email}
+        locales={footer.locales}
       />
     </LenisProvider>
   );

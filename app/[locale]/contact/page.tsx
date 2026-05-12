@@ -7,6 +7,8 @@ import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/contact/ContactForm";
 import { getDictionary } from "@/lib/i18n";
 import { isLocale, type Locale } from "@/lib/i18n/locales";
+import { fetchSiteSettings } from "@/lib/cms";
+import { localizeContactInfo, localizeFooter } from "@/lib/cms-helpers";
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
@@ -21,16 +23,20 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   };
 }
 
-export default function ContactPage({ params }: { params: { locale: string } }) {
+export default async function ContactPage({ params }: { params: { locale: string } }) {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
   const dict = getDictionary(locale);
   const c = dict.contact;
 
+  const settings = await fetchSiteSettings();
+  const info = localizeContactInfo(settings, locale, dict);
+  const footer = localizeFooter(settings, locale, dict);
+
   const ROWS: { Icon: LucideIcon; label: string; value: string; accent?: boolean }[] = [
-    { Icon: MapPin, label: c.info.office_label, value: c.info.office_value },
-    { Icon: Mail, label: c.info.email_label, value: c.info.email_value, accent: true },
-    { Icon: Phone, label: c.info.phone_label, value: c.info.phone_value },
-    { Icon: Clock, label: c.info.hours_label, value: c.info.hours_value },
+    { Icon: MapPin, label: c.info.office_label, value: info.office },
+    { Icon: Mail, label: c.info.email_label, value: info.email, accent: true },
+    { Icon: Phone, label: c.info.phone_label, value: info.phone },
+    { Icon: Clock, label: c.info.hours_label, value: info.hours },
   ];
 
   return (
@@ -85,10 +91,10 @@ export default function ContactPage({ params }: { params: { locale: string } }) 
         </section>
       </main>
       <Footer
-        copyright={dict.common.footer.copyright}
-        address={dict.common.footer.address}
-        email="info@greentech.tw"
-        locales={dict.common.footer.locales}
+        copyright={footer.copyright}
+        address={footer.address}
+        email={footer.email}
+        locales={footer.locales}
       />
     </LenisProvider>
   );

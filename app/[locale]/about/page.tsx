@@ -6,6 +6,16 @@ import Footer from "@/components/layout/Footer";
 import Timeline from "@/components/shared/Timeline";
 import { getDictionary } from "@/lib/i18n";
 import { isLocale, type Locale } from "@/lib/i18n/locales";
+import {
+  fetchSiteSettings,
+  fetchTeamMembers,
+  fetchMilestones,
+} from "@/lib/cms";
+import {
+  localizeTeamMember,
+  localizeMilestone,
+  localizeFooter,
+} from "@/lib/cms-helpers";
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
@@ -20,10 +30,35 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   };
 }
 
-export default function AboutPage({ params }: { params: { locale: string } }) {
+export default async function AboutPage({ params }: { params: { locale: string } }) {
   const locale = (isLocale(params.locale) ? params.locale : "zh") as Locale;
   const dict = getDictionary(locale);
   const a = dict.about;
+
+  // Story / mission 來自 dict（屬於 narrative 文本，不放 DB）。
+  // Team + milestones 從 DB；空時 fallback dict。
+  const [teamRows, milestoneRows, settings] = await Promise.all([
+    fetchTeamMembers(),
+    fetchMilestones("about"),
+    fetchSiteSettings(),
+  ]);
+
+  const team =
+    teamRows.length > 0
+      ? teamRows.map((m) => localizeTeamMember(m, locale))
+      : a.team.members.map((m) => ({
+          initials: m.initials,
+          name: m.name,
+          role: m.role,
+          avatarUrl: undefined,
+        }));
+
+  const milestones =
+    milestoneRows.length > 0
+      ? milestoneRows.map((m) => localizeMilestone(m, locale))
+      : a.milestones.items;
+
+  const footer = localizeFooter(settings, locale, dict);
 
   return (
     <LenisProvider>
@@ -80,7 +115,7 @@ export default function AboutPage({ params }: { params: { locale: string } }) {
               <h2 className="section-title">{a.team.title}</h2>
             </div>
             <div className="team-grid">
-              {a.team.members.map((m) => (
+              {team.map((m) => (
                 <article className="team-card" key={m.name}>
                   <div className="team-avatar" aria-hidden>
                     {m.initials}
@@ -100,15 +135,17 @@ export default function AboutPage({ params }: { params: { locale: string } }) {
               <div className="section-index">{a.milestones.label}</div>
               <h2 className="section-title">{a.milestones.title}</h2>
             </div>
-            <Timeline nodes={a.milestones.items.map((it) => ({ year: it.year, content: it.content }))} />
+            <Timeline
+              nodes={milestones.map((it) => ({ year: it.year, content: it.content }))}
+            />
           </div>
         </section>
       </main>
       <Footer
-        copyright={dict.common.footer.copyright}
-        address={dict.common.footer.address}
-        email="info@greentech.tw"
-        locales={dict.common.footer.locales}
+        copyright={footer.copyright}
+        address={footer.address}
+        email={footer.email}
+        locales={footer.locales}
       />
     </LenisProvider>
   );

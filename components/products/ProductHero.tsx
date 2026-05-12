@@ -1,5 +1,5 @@
 import { ProductHeroSvg } from "./ProductHeroSvg";
-import type { LocalizedProduct } from "@/lib/i18n/adapters";
+import type { LocalizedProduct } from "@/lib/cms-helpers";
 import type { Locale } from "@/lib/i18n/locales";
 
 const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
