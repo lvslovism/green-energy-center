@@ -9,7 +9,7 @@
   --line: rgba(94, 234, 212, 0.14);
   --line-soft: rgba(229, 233, 240, 0.06);
   --text: #E5E9F0;
-  --muted: #6B7689;
+  --muted: #8290A4;
   --accent: #5EEAD4;
   --accent-soft: rgba(94, 234, 212, 0.15);
   --accent-glow: rgba(94, 234, 212, 0.4);
@@ -1355,6 +1355,10 @@ em {
   border-radius: 6px;
   font-size: 0.85rem;
   font-family: var(--font-jetbrains), monospace;
+}
+.cf-turnstile {
+  margin-top: 0.25rem;
+  min-height: 65px;
 }
 .cf-submit {
   margin-top: 0.5rem;

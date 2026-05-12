@@ -15,7 +15,7 @@ import type { PerformanceMetric } from "@/lib/cms-helpers";
 const ACCENT = "#5EEAD4";
 const MARKET = "#3b4860";
 const GRID = "rgba(94, 234, 212, 0.06)";
-const AXIS = "#6B7689";
+const AXIS = "#8290A4";
 
 type ChartRow = {
   label: string;

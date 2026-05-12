@@ -201,7 +201,7 @@ export function ProductHeroSvgSupercapacitor() {
               y={y + 8}
               fontFamily="var(--font-jetbrains), monospace"
               fontSize="11"
-              fill="#6B7689"
+              fill="#8290A4"
               letterSpacing="3"
             >
               {r.k}

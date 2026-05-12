@@ -1,6 +1,9 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import type { Locale } from "@/lib/i18n/locales";
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 export type ContactFormStrings = {
   name_label: string;
@@ -40,10 +43,69 @@ const INITIAL: FormState = {
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
-export default function ContactForm({ strings }: { strings: ContactFormStrings }) {
+export default function ContactForm({
+  strings,
+  locale = "zh",
+}: {
+  strings: ContactFormStrings;
+  locale?: Locale;
+}) {
   const [data, setData] = useState<FormState>(INITIAL);
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const turnstileWidgetIdRef = useRef<string | undefined>();
+
+  // Turnstile widget loader（graceful degradation：env 未設 → 完全跳過）
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY) return;
+    const SCRIPT_ID = "cf-turnstile-script";
+    let mounted = true;
+
+    const renderWidget = () => {
+      if (!mounted || !turnstileRef.current || !window.turnstile) return;
+      // 防止 dev mode 重 mount 重覆 render
+      if (turnstileWidgetIdRef.current) return;
+      const id = window.turnstile.render(turnstileRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: "dark",
+        callback: (token: string) => setTurnstileToken(token),
+        "expired-callback": () => setTurnstileToken(""),
+        "error-callback": () => setTurnstileToken(""),
+      });
+      turnstileWidgetIdRef.current = id;
+    };
+
+    if (window.turnstile) {
+      renderWidget();
+    } else if (!document.getElementById(SCRIPT_ID)) {
+      const s = document.createElement("script");
+      s.id = SCRIPT_ID;
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      s.async = true;
+      s.defer = true;
+      s.onload = renderWidget;
+      document.head.appendChild(s);
+    } else {
+      // script 存在但 turnstile 還沒 ready，等一下再 render
+      const t = window.setTimeout(renderWidget, 300);
+      return () => window.clearTimeout(t);
+    }
+
+    return () => {
+      mounted = false;
+      const wid = turnstileWidgetIdRef.current;
+      if (wid && window.turnstile?.remove) {
+        try {
+          window.turnstile.remove(wid);
+        } catch {
+          // ignore
+        }
+      }
+      turnstileWidgetIdRef.current = undefined;
+    };
+  }, []);
 
   const update =
     (key: keyof FormState) =>
@@ -51,16 +113,31 @@ export default function ContactForm({ strings }: { strings: ContactFormStrings }
       setData((d) => ({ ...d, [key]: e.target.value }));
     };
 
+  const turnstileEnabled = Boolean(TURNSTILE_SITE_KEY);
+  const turnstileReady = !turnstileEnabled || turnstileToken.length > 0;
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (status === "submitting") return;
+    if (turnstileEnabled && !turnstileToken) {
+      // Widget 尚未完成 — UI 上 submit 按鈕已 disabled，這裡是雙保險
+      return;
+    }
     setStatus("submitting");
     setErrorMsg("");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          product_interest: data.product,
+          message: data.message,
+          locale,
+          turnstileToken: turnstileToken || undefined,
+        }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = (await res.json()) as { success?: boolean; message?: string };
@@ -87,6 +164,15 @@ export default function ContactForm({ strings }: { strings: ContactFormStrings }
           onClick={() => {
             setData(INITIAL);
             setStatus("idle");
+            setTurnstileToken("");
+            const wid = turnstileWidgetIdRef.current;
+            if (wid && typeof window !== "undefined" && window.turnstile?.reset) {
+              try {
+                window.turnstile.reset(wid);
+              } catch {
+                // ignore
+              }
+            }
           }}
         >
           {strings.success_reset}
@@ -189,11 +275,15 @@ export default function ContactForm({ strings }: { strings: ContactFormStrings }
         </div>
       )}
 
+      {turnstileEnabled && (
+        <div className="cf-turnstile" ref={turnstileRef} aria-label="Anti-bot verification" />
+      )}
+
       <button
         type="submit"
         className="cf-submit"
         data-cursor-hover
-        disabled={status === "submitting"}
+        disabled={status === "submitting" || !turnstileReady}
       >
         <span>{status === "submitting" ? strings.submitting : strings.submit}</span>
         <ArrowRight size={16} strokeWidth={1.6} />

@@ -60,7 +60,7 @@ export default async function ContactPage({ params }: { params: { locale: string
             </div>
             <div className="contact-grid">
               <div className="contact-form-col">
-                <ContactForm strings={c.form} />
+                <ContactForm strings={c.form} locale={locale} />
               </div>
               <aside className="contact-info-col">
                 <div className="contact-info-card">
