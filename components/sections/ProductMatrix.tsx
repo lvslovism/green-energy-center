@@ -4,14 +4,16 @@ import ProductCardWireframe from "@/components/visuals/ProductCardWireframe";
 import ProductCardIsometric from "@/components/visuals/ProductCardIsometric";
 import ProductCardDataSheet from "@/components/visuals/ProductCardDataSheet";
 import type { Product } from "@/lib/types";
+import type { Locale } from "@/lib/i18n/locales";
 
 type ProductMatrixProps = {
   products: Product[];
   label: string;
   title: string;
+  locale: Locale;
 };
 
-export default function ProductMatrix({ products, label, title }: ProductMatrixProps) {
+export default function ProductMatrix({ products, label, title, locale }: ProductMatrixProps) {
   return (
     <section
       id="products"
@@ -35,9 +37,11 @@ export default function ProductMatrix({ products, label, title }: ProductMatrixP
           }}
         >
           {products.map((p) => {
-            if (p.cardVariant === "A") return <ProductCardWireframe key={p.slug} product={p} />;
-            if (p.cardVariant === "B") return <ProductCardIsometric key={p.slug} product={p} />;
-            return <ProductCardDataSheet key={p.slug} product={p} />;
+            if (p.cardVariant === "A")
+              return <ProductCardWireframe key={p.slug} product={p} locale={locale} />;
+            if (p.cardVariant === "B")
+              return <ProductCardIsometric key={p.slug} product={p} locale={locale} />;
+            return <ProductCardDataSheet key={p.slug} product={p} locale={locale} />;
           })}
         </div>
       </div>

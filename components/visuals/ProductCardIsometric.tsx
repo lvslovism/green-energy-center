@@ -1,11 +1,18 @@
 "use client";
 import type { Product } from "@/lib/types";
+import type { Locale } from "@/lib/i18n/locales";
 
 /**
  * Card Variant B — Isometric Exploded（等角分解圖）
  * 拷貝自 mockup pc-variant-b。
  */
-export default function ProductCardIsometric({ product }: { product: Product }) {
+export default function ProductCardIsometric({
+  product,
+  locale,
+}: {
+  product: Product;
+  locale: Locale;
+}) {
   return (
     <article
       className="product-card pc-variant-b"
@@ -94,7 +101,7 @@ export default function ProductCardIsometric({ product }: { product: Product }) 
           </div>
         ))}
       </div>
-      <a href={`/products/${product.slug}/`} className="pc-link" data-cursor-hover>
+      <a href={`/${locale}/products/${product.slug}/`} className="pc-link" data-cursor-hover>
         VIEW SPECS →
       </a>
     </article>

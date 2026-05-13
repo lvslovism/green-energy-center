@@ -72,6 +72,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
           products={productCards}
           label={dict.home.products.label}
           title={dict.home.products.title}
+          locale={locale}
         />
         <StatsSection stats={stats.items} label={stats.label} title={stats.title} />
         <VisionSection label={vision.label} text={vision.text} />

@@ -1,11 +1,18 @@
 "use client";
 import type { Product } from "@/lib/types";
+import type { Locale } from "@/lib/i18n/locales";
 
 /**
  * Card Variant A — Wireframe（六邊形晶格 + 動態離子）
  * 拷貝自 mockup pc-variant-a，包成 props 化 component。
  */
-export default function ProductCardWireframe({ product }: { product: Product }) {
+export default function ProductCardWireframe({
+  product,
+  locale,
+}: {
+  product: Product;
+  locale: Locale;
+}) {
   return (
     <article
       className="product-card pc-variant-a"
@@ -78,7 +85,7 @@ export default function ProductCardWireframe({ product }: { product: Product }) 
           </div>
         ))}
       </div>
-      <a href={`/products/${product.slug}/`} className="pc-link" data-cursor-hover>
+      <a href={`/${locale}/products/${product.slug}/`} className="pc-link" data-cursor-hover>
         VIEW SPECS →
       </a>
     </article>

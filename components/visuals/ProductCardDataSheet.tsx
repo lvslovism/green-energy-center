@@ -1,5 +1,6 @@
 "use client";
 import type { Product } from "@/lib/types";
+import type { Locale } from "@/lib/i18n/locales";
 
 const ASCII_ART = `   ╔═══════╗
    ║ ░░░░░ ║
@@ -15,7 +16,13 @@ const ASCII_ART = `   ╔═══════╗
  * Card Variant C — Data Sheet Readout（規格表 + ASCII art）
  * 拷貝自 mockup pc-variant-c。
  */
-export default function ProductCardDataSheet({ product }: { product: Product }) {
+export default function ProductCardDataSheet({
+  product,
+  locale,
+}: {
+  product: Product;
+  locale: Locale;
+}) {
   return (
     <article
       className="product-card pc-variant-c"
@@ -80,7 +87,7 @@ export default function ProductCardDataSheet({ product }: { product: Product }) 
           </div>
         ))}
       </div>
-      <a href={`/products/${product.slug}/`} className="pc-link" data-cursor-hover>
+      <a href={`/${locale}/products/${product.slug}/`} className="pc-link" data-cursor-hover>
         VIEW SPECS →
       </a>
     </article>
