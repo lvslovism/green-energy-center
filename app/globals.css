@@ -2377,6 +2377,47 @@ body[data-admin="1"] * { cursor: auto !important; }
   margin-top: 1.5rem;
 }
 
+/* ============================================ */
+/*  LINE OA floating button                       */
+/* ============================================ */
+.line-float-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #06C755;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  z-index: 999;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.line-float-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 16px rgba(6, 199, 85, 0.4);
+}
+body[data-admin="1"] .line-float-btn {
+  display: none;
+}
+@media (max-width: 768px) {
+  .line-float-btn {
+    width: 48px;
+    height: 48px;
+    bottom: 16px;
+    right: 16px;
+  }
+  .line-float-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

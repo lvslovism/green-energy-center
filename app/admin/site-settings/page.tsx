@@ -38,6 +38,15 @@ type ContactInfoData = {
 };
 type SeoData = { title: Bi; description: Bi };
 
+type TrackingData = {
+  ga4_id: string;
+  gtm_id: string;
+  line_oa_url: string;
+  meta_pixel_id: string;
+  linkedin_partner_id: string;
+  clarity_project_id: string;
+};
+
 type FullData = {
   id?: string;
   hero: HeroData;
@@ -46,9 +55,18 @@ type FullData = {
   footer: FooterData;
   contact_info: ContactInfoData;
   seo: SeoData;
+  tracking: TrackingData;
 };
 
 const EMPTY_BI: Bi = { zh: "", en: "" };
+const EMPTY_TRACKING: TrackingData = {
+  ga4_id: "",
+  gtm_id: "",
+  line_oa_url: "",
+  meta_pixel_id: "",
+  linkedin_partner_id: "",
+  clarity_project_id: "",
+};
 
 const DEFAULTS: FullData = {
   hero: {
@@ -62,6 +80,7 @@ const DEFAULTS: FullData = {
   footer: { tagline: EMPTY_BI, copyright: EMPTY_BI },
   contact_info: { office: EMPTY_BI, email: "", phone: "", hours: EMPTY_BI },
   seo: { title: EMPTY_BI, description: EMPTY_BI },
+  tracking: { ...EMPTY_TRACKING },
 };
 
 export default function SiteSettingsPage() {
@@ -96,6 +115,10 @@ export default function SiteSettingsPage() {
           ...((row.contact_info as object) ?? {}),
         } as ContactInfoData,
         seo: { ...DEFAULTS.seo, ...((row.seo as object) ?? {}) } as SeoData,
+        tracking: {
+          ...EMPTY_TRACKING,
+          ...((row as unknown as { tracking?: TrackingData }).tracking ?? {}),
+        },
       });
     })();
   }, [push]);
@@ -113,6 +136,7 @@ export default function SiteSettingsPage() {
       footer: data.footer,
       contact_info: data.contact_info,
       seo: data.seo,
+      tracking: data.tracking,
     };
     const q = data.id
       ? supabaseAdmin.from("site_settings").update(payload).eq("id", data.id)
@@ -372,6 +396,77 @@ export default function SiteSettingsPage() {
           onChange={(v) => setData({ ...data, seo: { ...data.seo, description: v } })}
           multiline
         />
+      </Collapsible>
+
+      {/* Tracking & Integrations */}
+      <Collapsible title="Tracking & Integrations">
+        {(
+          [
+            {
+              key: "ga4_id",
+              label: "GA4 Measurement ID",
+              placeholder: "G-XXXXXXXXXX",
+              hint: "Google Analytics 4。如使用 GTM 管理 GA4，可留空此欄。",
+            },
+            {
+              key: "gtm_id",
+              label: "GTM Container ID",
+              placeholder: "GTM-XXXXXXX",
+              hint: "Google Tag Manager。設此欄後可在 GTM 內管理 GA4、Meta Pixel 等所有 tag。",
+            },
+            {
+              key: "line_oa_url",
+              label: "LINE Official Account URL",
+              placeholder: "https://lin.ee/xxxxx",
+              hint: "設定後會在頁面右下角顯示 LINE 浮動按鈕。留空則不顯示。",
+            },
+            {
+              key: "meta_pixel_id",
+              label: "Meta Pixel ID",
+              placeholder: "1234567890",
+              hint: "Facebook / Instagram 廣告追蹤。選填。",
+            },
+            {
+              key: "linkedin_partner_id",
+              label: "LinkedIn Insight Tag Partner ID",
+              placeholder: "123456",
+              hint: "LinkedIn 廣告受眾追蹤。B2B 推薦。選填。",
+            },
+            {
+              key: "clarity_project_id",
+              label: "Microsoft Clarity Project ID",
+              placeholder: "abcdefghij",
+              hint: "免費使用者行為分析（熱區圖、錄影）。選填。",
+            },
+          ] as { key: keyof TrackingData; label: string; placeholder: string; hint: string }[]
+        ).map((f) => (
+          <div className="adm-field" key={f.key}>
+            <label className="adm-field-label">{f.label}</label>
+            <input
+              className="adm-input"
+              type="text"
+              placeholder={f.placeholder}
+              value={data.tracking[f.key]}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  tracking: { ...data.tracking, [f.key]: e.target.value },
+                })
+              }
+            />
+            <small
+              style={{
+                display: "block",
+                marginTop: "0.4rem",
+                fontSize: "0.78rem",
+                color: "var(--muted)",
+                lineHeight: 1.5,
+              }}
+            >
+              {f.hint}
+            </small>
+          </div>
+        ))}
       </Collapsible>
 
       <div className="adm-action-bar">

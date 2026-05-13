@@ -186,6 +186,7 @@ export type Database = {
           id: string
           seo: Json
           stats: Json
+          tracking: Json
           updated_at: string
           vision: Json
         }
@@ -197,6 +198,7 @@ export type Database = {
           id?: string
           seo?: Json
           stats?: Json
+          tracking?: Json
           updated_at?: string
           vision?: Json
         }
@@ -208,6 +210,7 @@ export type Database = {
           id?: string
           seo?: Json
           stats?: Json
+          tracking?: Json
           updated_at?: string
           vision?: Json
         }

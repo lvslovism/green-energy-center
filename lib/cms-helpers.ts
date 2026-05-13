@@ -376,6 +376,40 @@ export function localizeStats(
   return { label, title, items };
 }
 
+// ---- Tracking & integrations ----
+
+export type TrackingConfig = {
+  ga4Id: string;
+  gtmId: string;
+  lineOaUrl: string;
+  metaPixelId: string;
+  linkedinPartnerId: string;
+  clarityProjectId: string;
+};
+
+const EMPTY_TRACKING: TrackingConfig = {
+  ga4Id: "",
+  gtmId: "",
+  lineOaUrl: "",
+  metaPixelId: "",
+  linkedinPartnerId: "",
+  clarityProjectId: "",
+};
+
+export function getTrackingConfig(settings: SiteSettingsRow | null): TrackingConfig {
+  const raw = (settings as unknown as { tracking?: Record<string, unknown> } | null)?.tracking;
+  if (!raw || typeof raw !== "object") return { ...EMPTY_TRACKING };
+  const str = (k: string) => (typeof raw[k] === "string" ? (raw[k] as string) : "");
+  return {
+    ga4Id: str("ga4_id"),
+    gtmId: str("gtm_id"),
+    lineOaUrl: str("line_oa_url"),
+    metaPixelId: str("meta_pixel_id"),
+    linkedinPartnerId: str("linkedin_partner_id"),
+    clarityProjectId: str("clarity_project_id"),
+  };
+}
+
 // ---- Marquee (static bilingual content, not in DB) ----
 
 export const HOME_MARQUEE: MarqueeItem[] = [
