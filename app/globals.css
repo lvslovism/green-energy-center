@@ -13,6 +13,13 @@
   --accent: #5EEAD4;
   --accent-soft: rgba(94, 234, 212, 0.15);
   --accent-glow: rgba(94, 234, 212, 0.4);
+  /* Compare page per-product colors */
+  --color-na: #F97316;
+  --color-na-soft: rgba(249, 115, 22, 0.15);
+  --color-li: #A78BFA;
+  --color-li-soft: rgba(167, 139, 250, 0.15);
+  --color-sc: #22D3EE;
+  --color-sc-soft: rgba(34, 211, 238, 0.15);
 }
 
 * { box-sizing: border-box; }
@@ -2039,6 +2046,335 @@ body[data-admin="1"] * { cursor: auto !important; }
   font-size: 11px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
+}
+
+/* ============================================ */
+/*  Compare page (/compare)                       */
+/* ============================================ */
+
+/* Header — 3-product identity cards */
+.cmp-identity-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+@media (min-width: 768px) {
+  .cmp-identity-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.cmp-identity-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--line-soft);
+  border-top-width: 2px;
+  padding: 1.25rem 1.25rem 1.5rem;
+  position: relative;
+}
+.cmp-identity-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.35rem;
+}
+.cmp-identity-sub {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.cmp-identity-grade {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Section 01: Spec table */
+.cmp-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  background: var(--bg-soft);
+}
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+.cmp-table thead th {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-soft-2);
+}
+.cmp-table thead th.cmp-th-product {
+  border-top: 2px solid;
+  color: var(--text);
+  font-weight: 500;
+}
+.cmp-table tbody td {
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.9rem;
+  vertical-align: top;
+}
+.cmp-table tbody tr:last-child td { border-bottom: none; }
+.cmp-table td.cmp-cell-label {
+  color: var(--muted);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.cmp-cell-best {
+  color: var(--accent);
+  font-weight: 700;
+}
+.cmp-best-note {
+  margin-top: 1rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+.cmp-best-note::before {
+  content: "■";
+  color: var(--accent);
+  margin-right: 0.5rem;
+}
+
+/* Section 02: Grouped CSS bars */
+.cmp-perf {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.cmp-perf-row {
+  background: var(--bg-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+.cmp-perf-row-title {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.cmp-perf-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.cmp-perf-bar-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 0.85rem;
+  align-items: center;
+}
+@media (max-width: 600px) {
+  .cmp-perf-bar-row { grid-template-columns: 64px 1fr; }
+}
+.cmp-perf-bar-label {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cmp-perf-bar-track {
+  position: relative;
+  height: 22px;
+  background: var(--bg-soft-2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.cmp-perf-bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+.cmp-perf-bar-value {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.6rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+}
+.cmp-perf-bar-best .cmp-perf-bar-value::before {
+  content: "★ ";
+  color: var(--accent);
+}
+.cmp-perf-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-top: 1.25rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cmp-perf-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cmp-perf-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.cmp-perf-legend-star {
+  color: var(--accent);
+}
+
+/* Section 03: Use case matrix */
+.cmp-matrix-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  background: var(--bg-soft);
+}
+.cmp-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+.cmp-matrix thead th {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-soft-2);
+}
+.cmp-matrix thead th.cmp-th-product {
+  border-top: 2px solid;
+  color: var(--text);
+  font-weight: 500;
+}
+.cmp-matrix tbody td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.9rem;
+  vertical-align: top;
+}
+.cmp-matrix tbody tr:last-child td { border-bottom: none; }
+.cmp-matrix td.cmp-scenario {
+  font-weight: 500;
+  white-space: nowrap;
+}
+.cmp-fit-best {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+  border-radius: 4px;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.cmp-fit-suitable { color: var(--text); font-size: 0.85rem; }
+.cmp-fit-hybrid { color: var(--text); font-size: 0.85rem; }
+.cmp-fit-na { color: var(--muted); font-style: italic; font-size: 0.85rem; }
+.cmp-fit-detail {
+  display: block;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+/* Section 04: CTA */
+.cmp-cta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 2rem 0 2.5rem;
+}
+@media (min-width: 768px) {
+  .cmp-cta-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.cmp-cta-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 1.25rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--line-soft);
+  border-top-width: 2px;
+  text-decoration: none;
+  color: var(--text);
+  transition: background 0.25s, transform 0.25s;
+}
+.cmp-cta-link:hover {
+  background: var(--bg-soft-2);
+  transform: translateY(-2px);
+}
+.cmp-cta-link-meta {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cmp-cta-link-name {
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: -0.015em;
+}
+.cmp-cta-link-arrow {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+.cmp-cta-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 0.35rem;
+}
+.cmp-cta-contact-wrap {
+  text-align: center;
+  margin-top: 1.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

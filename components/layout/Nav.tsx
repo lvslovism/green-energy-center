@@ -7,6 +7,7 @@ import { isLocale, DEFAULT_LOCALE, LOCALE_TOGGLE_LABEL, type Locale } from "@/li
 type NavStrings = {
   brand: string;
   products: string;
+  compare: string;
   technology: string;
   about: string;
   contact: string;
@@ -41,6 +42,7 @@ export default function Nav({ locale, strings }: NavProps) {
       href: `/${locale}/#products`,
       scrollTargetOnHome: "products",
     },
+    { label: strings.compare, href: `/${locale}/compare/` },
     { label: strings.technology, href: `/${locale}/technology/` },
     { label: strings.about, href: `/${locale}/about/` },
     { label: strings.contact, href: `/${locale}/contact/` },

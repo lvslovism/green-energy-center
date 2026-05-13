@@ -2,6 +2,7 @@
   "common": {
     "nav": {
       "products": "產品",
+      "compare": "比較",
       "technology": "技術",
       "about": "關於",
       "contact": "聯絡",
@@ -285,5 +286,29 @@
       "hours_value": "Mon - Fri, 09:00 - 18:00 (GMT+8)",
       "map_placeholder": "MAP PLACEHOLDER"
     }
+  },
+  "compare": {
+    "meta_title": "產品比較 | 綠能科技",
+    "meta_description": "鈉離子電池、鋰電池、超電容三大產品線規格與效能比較。",
+    "label": "PRODUCT COMPARISON",
+    "title": "產品比較",
+    "subtitle": "三條產品線各有專精。依應用場景、效能需求與成本結構，找到最適合的儲能方案。",
+    "specs_label": "01 / KEY SPECS",
+    "specs_title": "關鍵規格比較",
+    "specs_best_note": "■ = 該維度最佳",
+    "perf_label": "02 / PERFORMANCE",
+    "perf_title": "效能對比",
+    "perf_best_note": "★ = 該維度最佳",
+    "usecase_label": "03 / USE CASE FIT",
+    "usecase_title": "應用場景推薦",
+    "cta_label": "04 / NEXT STEP",
+    "cta_title": "找到您的方案了嗎？",
+    "cta_subtitle": "點擊下方查看完整產品規格，或直接聯繫我們的儲能方案團隊。",
+    "cta_view_specs": "查看規格 →",
+    "cta_contact": "聯繫我們 →",
+    "best": "★ 最佳",
+    "suitable": "可用",
+    "hybrid": "混搭",
+    "na": "不適用"
   }
 }

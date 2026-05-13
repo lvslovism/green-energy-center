@@ -2,6 +2,7 @@
   "common": {
     "nav": {
       "products": "Products",
+      "compare": "Compare",
       "technology": "Technology",
       "about": "About",
       "contact": "Contact",
@@ -285,5 +286,29 @@
       "hours_value": "Mon - Fri, 09:00 - 18:00 (GMT+8)",
       "map_placeholder": "MAP PLACEHOLDER"
     }
+  },
+  "compare": {
+    "meta_title": "Product comparison | Green Energy",
+    "meta_description": "Compare specs and performance across sodium-ion, lithium-ion, and supercapacitor product lines.",
+    "label": "PRODUCT COMPARISON",
+    "title": "Product comparison",
+    "subtitle": "Three product lines, each with its own strengths. Find the best energy storage solution based on your use case, performance needs, and cost structure.",
+    "specs_label": "01 / KEY SPECS",
+    "specs_title": "Key specs comparison",
+    "specs_best_note": "■ = Best in category",
+    "perf_label": "02 / PERFORMANCE",
+    "perf_title": "Performance comparison",
+    "perf_best_note": "★ = Best in category",
+    "usecase_label": "03 / USE CASE FIT",
+    "usecase_title": "Use case recommendations",
+    "cta_label": "04 / NEXT STEP",
+    "cta_title": "Found your solution?",
+    "cta_subtitle": "Click below for full product specs, or contact our energy solutions team directly.",
+    "cta_view_specs": "View specs →",
+    "cta_contact": "Contact us →",
+    "best": "★ Best",
+    "suitable": "Suitable",
+    "hybrid": "Hybrid",
+    "na": "N/A"
   }
 }
